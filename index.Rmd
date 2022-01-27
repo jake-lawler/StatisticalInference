@@ -1,0 +1,27 @@
+--- 
+title: "Notes on 'Statistical Inference' by Casella & Berger"
+author: "Jake Lawler"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: jake-lawler/StatisticalInference
+description: "My notes on 'Statistical Inference' by George Casella and Roger Berger."
+---
+
+# Preface {-}
+
+Notes on second edition. 
+
+```{r echo = FALSE, eval = FALSE}
+
+# Create a live view of the book.
+
+library(bookdown)
+serve_book(dir = ".", output_dir = "_book", preview = TRUE, in_session = TRUE, quiet = FALSE)
+
+```
+

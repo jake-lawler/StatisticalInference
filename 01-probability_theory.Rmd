@@ -1,0 +1,12 @@
+# Probability Theory {#probability_theory}
+
+## Chapter Notes
+
+Deeper dive into unordered with replacement counting.
+
+## Questions
+
+
+
+
+## Further Reading {-}

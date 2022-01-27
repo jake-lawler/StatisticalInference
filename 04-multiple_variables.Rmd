@@ -1,0 +1,25 @@
+# Multiples Random Variables {#multiple_variables}
+
+## Chapter Notes
+
+
+## Questions
+
+### Ex 4.39 {-}
+
+**Question**
+
+> Let ($X_1, \dots , X_n$) have a multinomial distribution with $m$ trials and cell probabilities $p_1, \dots ,p_n$ (see Definition 4.6.2). Show that, for every $i$ and $j$,
+$$
+\begin{aligned}
+X_i | X_j = x_j &\sim \text{binomial} \left( m-x_j, \frac{p_i}{1-p_j} \right) \\
+X_j &\sim \text{binomial}\ (m, p_j)
+\end{aligned}
+$$
+and that $\text{Cov}(X_i, X_j) = -mp_ip_j$.
+
+
+**Answer**
+
+
+## Further Reading {-}
