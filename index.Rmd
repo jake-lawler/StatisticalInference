@@ -14,8 +14,6 @@ description: "My notes on 'Statistical Inference' by George Casella and Roger Be
 
 # Preface {-}
 
-Notes on second edition. 
-
 ```{r echo = FALSE, eval = FALSE}
 
 # Create a live view of the book.
@@ -24,4 +22,24 @@ library(bookdown)
 serve_book(dir = ".", output_dir = "_book", preview = TRUE, in_session = TRUE, quiet = FALSE)
 
 ```
+
+These are my notes on the second edition of George Casella and Roger Berger's 'Statistical Inference'. They are incomplete, I'm still working my way through the book. I'm broadly following this [handbook](https://oliverychen.github.io/files/doc/CB.pdf) by Oliver Y. Chén which goes through each chapter and highlights the important concepts and theorems, as well as suggesting some questions to attempt. However most of my chapter notes so far include a little more detail than is suggested by the handbook, as well as some plots and animations to present some of the points visually.
+
+
+To revisit:
+
+* Chapter 1
+  + Animating the markers for unordered with replacement counts
+  + Question 1.4.3 (b)
+* Chapter 2
+  + Point 10 from the handbook on Lipschitz condition
+  + Questions from handbook
+* Chapter 3
+  + More animations / maybe a Shiny app
+* Chapter 4
+  + Expand the section on inequalities.
+  + Exercise 4.39
+* Chapter 5 - 12 not yet complete.
+
+
 

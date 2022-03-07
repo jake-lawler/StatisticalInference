@@ -24,7 +24,7 @@
 <meta name="author" content="Jake Lawler" />
 
 
-<meta name="date" content="2022-01-27" />
+<meta name="date" content="2022-02-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -137,13 +137,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="chapter" data-level="1" data-path="probability_theory.html"><a href="probability_theory.html"><i class="fa fa-check"></i><b>1</b> Probability Theory</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="probability_theory.html"><a href="probability_theory.html#chapter-notes"><i class="fa fa-check"></i><b>1.1</b> Chapter Notes</a></li>
-<li class="chapter" data-level="1.2" data-path="probability_theory.html"><a href="probability_theory.html#questions"><i class="fa fa-check"></i><b>1.2</b> Questions</a></li>
+<li class="chapter" data-level="1.1" data-path="probability_theory.html"><a href="probability_theory.html#chapter-notes"><i class="fa fa-check"></i><b>1.1</b> Chapter Notes</a>
+<ul>
+<li class="chapter" data-level="" data-path="probability_theory.html"><a href="probability_theory.html#counting"><i class="fa fa-check"></i>Counting</a></li>
+<li class="chapter" data-level="" data-path="probability_theory.html"><a href="probability_theory.html#inequalities-bonferronis-and-booles"><i class="fa fa-check"></i>Inequalities: Bonferroni’s and Boole’s</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="probability_theory.html"><a href="probability_theory.html#questions"><i class="fa fa-check"></i><b>1.2</b> Questions</a>
+<ul>
+<li class="chapter" data-level="" data-path="probability_theory.html"><a href="probability_theory.html#ex-1.42"><i class="fa fa-check"></i>Ex 1.42</a></li>
+<li class="chapter" data-level="" data-path="probability_theory.html"><a href="probability_theory.html#ex-1.43"><i class="fa fa-check"></i>Ex 1.43</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="probability_theory.html"><a href="probability_theory.html#further-reading"><i class="fa fa-check"></i>Further Reading</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="transformations.html"><a href="transformations.html"><i class="fa fa-check"></i><b>2</b> Transformations and Expectations</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="transformations.html"><a href="transformations.html#chapter-notes-1"><i class="fa fa-check"></i><b>2.1</b> Chapter Notes</a></li>
+<li class="chapter" data-level="2.1" data-path="transformations.html"><a href="transformations.html#chapter-notes-1"><i class="fa fa-check"></i><b>2.1</b> Chapter Notes</a>
+<ul>
+<li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#monotonic-transformations"><i class="fa fa-check"></i>Monotonic Transformations</a></li>
+<li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#generating-random-samples"><i class="fa fa-check"></i>Generating Random Samples</a></li>
+<li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#moment-generating-functions"><i class="fa fa-check"></i>Moment Generating Functions</a></li>
+<li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#differentiating-under-an-integral-sign"><i class="fa fa-check"></i>Differentiating Under an Integral Sign</a></li>
+</ul></li>
 <li class="chapter" data-level="2.2" data-path="transformations.html"><a href="transformations.html#questions-1"><i class="fa fa-check"></i><b>2.2</b> Questions</a>
 <ul>
 <li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#ex-2.1"><i class="fa fa-check"></i>Ex 2.1</a></li>
@@ -212,6 +226,172 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 2</span> Transformations and Expectations</h1>
 <div id="chapter-notes-1" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Chapter Notes</h2>
+<p>Chapter 2 is all about the behaviour of functions of a random variable <span class="math inline">\(X\)</span>. We get a new random variable <span class="math inline">\(Y = g(X)\)</span> and if <span class="math inline">\(g\)</span> is nice enough we can find simple expressions for the cdf and pdf of <span class="math inline">\(Y\)</span> in terms of <span class="math inline">\(g\)</span> and the cdf or pdf of <span class="math inline">\(X\)</span>.</p>
+<div id="monotonic-transformations" class="section level3 unnumbered">
+<h3>Monotonic Transformations</h3>
+<p>For example, if <span class="math inline">\(g\)</span> is monotonic, we have the following theorem:</p>
+<p><strong>Theorem 2.1.3</strong>
+Let <span class="math inline">\(X\)</span> have cdf <span class="math inline">\(F_X(x)\)</span>, let <span class="math inline">\(Y=g(X)\)</span>, and define the support sets of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> as follows:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathcal{X} &amp;= \{x: f_X(x) &gt;0\}\\
+\mathcal{Y} &amp;= \{y: y=g(x) \text{ for some } x \in X\ \}
+\end{aligned}
+\]</span></p>
+<p>Then:</p>
+<ol style="list-style-type: lower-alpha">
+<li>If <span class="math inline">\(g\)</span> is an increasing function on <span class="math inline">\(\mathcal{X}\)</span>, <span class="math inline">\(F_Y(y) = F_X(g^{-1}(y))\)</span> for <span class="math inline">\(y \in \mathcal{Y}\)</span></li>
+<li>If <span class="math inline">\(g\)</span> is a decreasing function on <span class="math inline">\(\mathcal{X}\)</span> and <span class="math inline">\(X\)</span> is a continuous random variable, <span class="math inline">\(F_Y(y) = 1 -F_X(g^{-1}(y))\)</span> for <span class="math inline">\(y \in \mathcal{Y}\)</span>.</li>
+</ol>
+<p>Because <span class="math inline">\(g(x)\)</span> is monotone it is both one-to-one and onto from <span class="math inline">\(\mathcal{X} \to \mathcal{Y}\)</span>. So <span class="math inline">\(g^{-1}(x)\)</span> is well-defined.</p>
+<p>For example, here is the cdf of the uniform(0,1) distribution:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="transformations.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb1-2"><a href="transformations.html#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun=</span>punif, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">1</span>),</span>
+<span id="cb1-3"><a href="transformations.html#cb1-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">colour=</span>tol_light[[<span class="dv">4</span>]], <span class="at">lwd=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb1-4"><a href="transformations.html#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>,<span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb1-5"><a href="transformations.html#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Cumulative Probability&quot;</span>)</span></code></pre></div>
+<p><img src="02-transformations_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>It’s just <span class="math inline">\(F_X(x) = x\)</span>. And we want to use the transformation <span class="math inline">\(Y = g(X) = -\log X\)</span> which is decreasing over the support of <span class="math inline">\(X\)</span>, <span class="math inline">\((0,1)\)</span>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="transformations.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb2-2"><a href="transformations.html#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun=</span><span class="cf">function</span>(x){<span class="sc">-</span><span class="fu">log</span>(x)},<span class="at">colour=</span>tol_light[[<span class="dv">3</span>]], <span class="at">lwd=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb2-3"><a href="transformations.html#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>,<span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb2-4"><a href="transformations.html#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;- log X&quot;</span>)</span></code></pre></div>
+<p><img src="02-transformations_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>As <span class="math inline">\(X\)</span> ranges from 0 to 1, <span class="math inline">\(Y\)</span> ranges from 0 to <span class="math inline">\(\infty\)</span>.</p>
+<p>By Theorem 2.1.3,</p>
+<p><span class="math display">\[
+F_Y(y) = 1 -F_X(g^{-1}(y)) = 1 - F_X(e^{-y}) = 1 - e^{-y}
+\]</span></p>
+<p>This is the cdf of the exponential distribution with rate parameter 1. I’ve plotted the cdfs of the uniform and exponential below.I’ve only plotted the range <span class="math inline">\((0,4)\)</span> for the exponential.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="transformations.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># not convinced of the utility of this animation - particularly the timing on each side</span></span>
+<span id="cb3-2"><a href="transformations.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># since the exponential should really be ranging from 0 - infinity.</span></span>
+<span id="cb3-3"><a href="transformations.html#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="transformations.html#cb3-4" aria-hidden="true" tabindex="-1"></a>data_exp <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">count =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1001</span>,</span>
+<span id="cb3-5"><a href="transformations.html#cb3-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">uniform=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">length.out=</span><span class="dv">1001</span>),</span>
+<span id="cb3-6"><a href="transformations.html#cb3-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">exponential=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">4</span>,<span class="at">length.out=</span><span class="dv">1001</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb3-7"><a href="transformations.html#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(uniform,exponential),<span class="at">names_to=</span><span class="st">&quot;variable&quot;</span>,<span class="at">values_to=</span><span class="st">&quot;seq&quot;</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb3-8"><a href="transformations.html#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cdf=</span><span class="fu">if_else</span>(variable <span class="sc">==</span> <span class="st">&quot;uniform&quot;</span>, seq,<span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span>seq)))</span>
+<span id="cb3-9"><a href="transformations.html#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="transformations.html#cb3-10" aria-hidden="true" tabindex="-1"></a>anim_exp <span class="ot">&lt;-</span> </span>
+<span id="cb3-11"><a href="transformations.html#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(data_exp, <span class="fu">aes</span>(seq,cdf,<span class="at">group=</span>variable))<span class="sc">+</span></span>
+<span id="cb3-12"><a href="transformations.html#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb3-13"><a href="transformations.html#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(<span class="fu">fct_rev</span>(variable)), <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)<span class="sc">+</span></span>
+<span id="cb3-14"><a href="transformations.html#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Random Variable&quot;</span>)<span class="sc">+</span></span>
+<span id="cb3-15"><a href="transformations.html#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Cumulative Probability&quot;</span>)<span class="sc">+</span></span>
+<span id="cb3-16"><a href="transformations.html#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transition_reveal</span>(count) <span class="co"># problem to fix: colour and line width specification doesn&#39;t work</span></span>
+<span id="cb3-17"><a href="transformations.html#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="transformations.html#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(anim_exp,<span class="at">end_pause =</span> <span class="dv">50</span>)</span></code></pre></div>
+<p><img src="02-transformations_files/figure-html/unnamed-chunk-4-1.gif" /><!-- --></p>
+<p>We won’t always be dealing with transformations that are monotonic over the entire support set, however we usually can partition <span class="math inline">\(\mathcal X\)</span> into intervals such that <span class="math inline">\(g\)</span> is monotonic over each interval, and build the cdf of <span class="math inline">\(Y\)</span> this way.</p>
+</div>
+<div id="generating-random-samples" class="section level3 unnumbered">
+<h3>Generating Random Samples</h3>
+<p>The chapter introduces a method of generating random samples from a distribution. We will need the following theorem:</p>
+<p><strong>Theorem 2.1.10 - Probability Integral Transformation</strong></p>
+<p>Let <span class="math inline">\(X\)</span> have continuous cdf <span class="math inline">\(F_X(x)\)</span> and define the random variable <span class="math inline">\(Y\)</span> as <span class="math inline">\(Y=F_X(x).\)</span> Then <span class="math inline">\(Y\)</span> is uniformly distributed on <span class="math inline">\((0,1),\)</span> that is <span class="math inline">\(P(Y \leq y)=y\)</span> for <span class="math inline">\(0&lt;y&lt;1\)</span>.</p>
+<p>There is a bit of subtlety here around defining inverse cdfs in cases where the cdf is not strictly increasing, but stays level over some range. In these cases we define</p>
+<p><span class="math display">\[
+F_x^{-1}(y) = \inf\{x: F_X(X)=y\}
+\]</span></p>
+<p>Aside from this, it is fairly straightforward to show that <span class="math inline">\(P(Y \leq y)=y\)</span>.</p>
+<p>Now, if we can generate random samples from uniform<span class="math inline">\((0,1)\)</span>, we can create observations from a population with cdf <span class="math inline">\(F_X(x)\)</span> and solve <span class="math inline">\(F_X(x)=u\)</span>.</p>
+</div>
+<div id="moment-generating-functions" class="section level3 unnumbered">
+<h3>Moment Generating Functions</h3>
+<p>The chapter introduces expectations, and then moments. For each integer <span class="math inline">\(n\)</span>, the <span class="math inline">\(n\)</span>th moment of <span class="math inline">\(X\)</span>, <span class="math inline">\(\mu&#39;_n\)</span>, is</p>
+<p><span class="math display">\[
+\mu&#39;_n = E(X^n)
+\]</span>
+The <span class="math inline">\(n\)</span>th central moment of <span class="math inline">\(X\)</span>, <span class="math inline">\(\mu_n\)</span>, is</p>
+<p><span class="math display">\[
+\mu_n = E((X-\mu)^n)
+\]</span>
+where <span class="math inline">\(\mu = \mu&#39;_1=E(X)\)</span>.</p>
+<p>The second central moment is the variance.</p>
+<p>The chapter introduces moment generating functions, saying that often it is easier to calculate the moments directly, but mgfs are still useful for characterising distributions (see Theorem 2.3.12).</p>
+<p>For a random variable <span class="math inline">\(X\)</span> with cdf <span class="math inline">\(F_X(x)\)</span>, the mgf is</p>
+<p><span class="math display">\[
+M_X(t)=E(e^{tX}).
+\]</span>
+We generate moments from this functions as follows:</p>
+<p><strong>Theorem 2.3.7</strong>
+If <span class="math inline">\(X\)</span> has mgf <span class="math inline">\(M_X(t)\)</span> then</p>
+<p><span class="math display">\[
+E(X^n)=M_X^{(n)}(0)=\frac{d^n}{dt^n}M_X(t)\vert_{t=0}
+\]</span></p>
+<p>Convergence (in a neighbourhood of 0) of mgfs to an mgf implies convergence of cdfs:</p>
+<p><strong>Theorem 2.3.12 - Convergence of mgfs</strong></p>
+<p>Suppose <span class="math inline">\(\{X_i, i=1,2,\dots\}\)</span> is a sequence of random variables, each with mgf <span class="math inline">\(M_{X_i}(t).\)</span> And suppose that</p>
+<p><span class="math display">\[
+\begin{aligned}
+\lim_{i\to\infty} M_{X_i}(t) = M_X(t),&amp;&amp; \text{for all } t \text{ in a neighbourhood of 0}
+\end{aligned}
+\]</span></p>
+<p>and <span class="math inline">\(M_X(t)\)</span> is an mgf. There there exists a unique cdf <span class="math inline">\(F_X(x)\)</span> whose moments are determined by <span class="math inline">\(M_X(t)\)</span> and, for all <span class="math inline">\(x\)</span> where <span class="math inline">\(F_X(x)\)</span> is continuous, we have</p>
+<p><span class="math display">\[
+\lim_{i\to\infty} F_{X_i}(x) = F_X(x).
+\]</span></p>
+<p>As a example, the chapter goes on to show that mgfs of the binomial<span class="math inline">\((n,p)\)</span> distribution converge to the mgf of the Poisson(<span class="math inline">\(\lambda\)</span>) distribution. When we consider <span class="math inline">\(p=\lambda/n\)</span> and let <span class="math inline">\(n\to \infty\)</span>.</p>
+<p>This is a common approximation, usually advised when <span class="math inline">\(n\)</span> is large and <span class="math inline">\(np\)</span> is small, and <strong>Theorem 2.3.12</strong> explains its use.</p>
+<p>Here’s an example with <span class="math inline">\(n=15\)</span> and <span class="math inline">\(p=0.3\)</span>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="transformations.html#cb4-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="dv">15</span></span>
+<span id="cb4-2"><a href="transformations.html#cb4-2" aria-hidden="true" tabindex="-1"></a>p<span class="ot">=</span><span class="fl">0.3</span></span>
+<span id="cb4-3"><a href="transformations.html#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="transformations.html#cb4-4" aria-hidden="true" tabindex="-1"></a>data_pois <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x=</span><span class="dv">0</span><span class="sc">:</span>n,</span>
+<span id="cb4-5"><a href="transformations.html#cb4-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">Binomial=</span><span class="fu">dbinom</span>(x,n,p),</span>
+<span id="cb4-6"><a href="transformations.html#cb4-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">Poisson=</span><span class="fu">dpois</span>(x,<span class="at">lambda=</span>n<span class="sc">*</span>p))<span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="transformations.html#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(Binomial,Poisson),<span class="at">names_to =</span> <span class="st">&quot;Distribution&quot;</span>,<span class="at">values_to =</span> <span class="st">&quot;pmf&quot;</span>)</span>
+<span id="cb4-8"><a href="transformations.html#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="transformations.html#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_pois, <span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>pmf,<span class="at">group=</span>Distribution))<span class="sc">+</span></span>
+<span id="cb4-10"><a href="transformations.html#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">fill=</span>Distribution),<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>)<span class="sc">+</span></span>
+<span id="cb4-11"><a href="transformations.html#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Probability Mass&quot;</span>)<span class="sc">+</span></span>
+<span id="cb4-12"><a href="transformations.html#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="dv">0</span><span class="sc">:</span><span class="dv">15</span>)</span></code></pre></div>
+<p><img src="02-transformations_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>This might be interesting as a Shiny app.</p>
+<p>To show convergence to the mgf of the Poisson, we need the following lemma.</p>
+<p><strong>Lemma 2.3.14</strong></p>
+<p>Let <span class="math inline">\(a_1, a_2, \dots\)</span> be a sequence of numbers converging to <span class="math inline">\(a\)</span>, that is <span class="math inline">\(\lim_{n \to\infty} =a\)</span>. Then</p>
+<p><span class="math display">\[
+\lim_{n \to\infty} \left( 1 + \frac{a_n}{n} \right)^n = e^a
+\]</span></p>
+<p>In the binomial/Poisson example, we have:</p>
+<p><span class="math display">\[
+\begin{aligned}
+M_X(t) &amp;= [pe^t + (1-p)]^n &amp;&amp;\text{mgf for distribution Binomial}(n,p) \\
+&amp;=[1+ \frac{1}{n}(e^t -1)(np)]^n &amp;&amp; \text{rearranging}\\
+&amp;= [1+ \frac{1}{n}(e^t -1)\lambda]^n.
+\end{aligned}
+\]</span></p>
+<p>Now we set <span class="math inline">\(a_n = a = (e^t-1)\lambda\)</span> and use the Lemma to get</p>
+<p><span class="math display">\[
+\begin{aligned}
+\lim_{n\to \infty} M_X(t) &amp;= e^{\lambda(e^t-1)}\\
+&amp;=M_Y(t) &amp;&amp;\text{i.e. the mgf of distribution Poisson}(\lambda)
+\end{aligned}
+\]</span></p>
+</div>
+<div id="differentiating-under-an-integral-sign" class="section level3 unnumbered">
+<h3>Differentiating Under an Integral Sign</h3>
+<p>The chapter takes a brief dip into calculus, noting that the scenario where we want to reverse the order of integration and differentiation comes up fairly often in theoretical statistics. Leibniz’s Rule (an application of the Fundamental Theorem of Calculus and the chain rule) is introduced;</p>
+<p><strong>Theorem 2.4.1 - Leibniz’s Rule</strong></p>
+<p>If <span class="math inline">\(f(x,\theta)\)</span>, <span class="math inline">\(a(\theta)\)</span>, and <span class="math inline">\(b(\theta)\)</span> are differentiable with respect to <span class="math inline">\(\theta\)</span> then.</p>
+<p><span class="math display">\[
+\frac{d}{d\theta}\int^{b(\theta)}_{a(\theta)} f(x,\theta) dx = f(b(\theta),\theta)\frac{d}{d\theta}b(\theta) - f(a(\theta),\theta)\frac{d}{d\theta}a(\theta) + \int^{b(\theta)}_{a(\theta)} \frac{\partial}{\partial\theta} f(x,\theta) dx
+\]</span>
+If <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are constants the first two terms of the LHS disappear. So we can differentiate the integral with no problem if we have the integral of a differentiable function over a finite range. Problems can arise with infinite range.</p>
+<p>The chapter points out that the question of reversing the order of differentiation and integration is a question about reversing the order of <em>limits</em> and integration, since a derivative is a limit. Some important results presented in the chapter follow from Lesbesgue’s Dominated Convergence Theorem:</p>
+<p><strong>Theorem 2.4.2 - Lesbesgue’s Dominated Convergence Theorem</strong></p>
+<p>Suppose function <span class="math inline">\(h(x,y)\)</span> is continuous at <span class="math inline">\(y_0\)</span> for each <span class="math inline">\(x\)</span>, and there exists a function <span class="math inline">\(g(x)\)</span> satisfying</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(|h(x,y)|\leq g(x)\)</span> for all <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>,</li>
+<li><span class="math inline">\(\int^\infty_{-\infty} g(x) &lt; \infty\)</span></li>
+</ol>
+<p>Then</p>
+<p><span class="math display">\[
+\lim_{y\to y_0}\int^\infty_{-\infty} h(x,y)dx = \int^\infty_{-\infty} \lim_{y\to y_0} h(x,y) dx
+\]</span></p>
+<p>Bounding <span class="math inline">\(h\)</span> by a function <span class="math inline">\(g\)</span> with a finite limit ensures that the integral can’t behave too badly.</p>
+</div>
 </div>
 <div id="questions-1" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Questions</h2>
@@ -232,7 +412,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li></li>
 </ol>
 <p>Our transformation <span class="math inline">\(Y=X^3\)</span> is monotone on <span class="math inline">\(0 &lt; x &lt; 1\)</span></p>
-<p><img src="02-transformations_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="02-transformations_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>and so by Theorem 2.1.5 our pdf is:</p>
 <p><span class="math display">\[
 \begin{aligned}

@@ -24,7 +24,7 @@
 <meta name="author" content="Jake Lawler" />
 
 
-<meta name="date" content="2022-01-27" />
+<meta name="date" content="2022-02-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -137,8 +137,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="chapter" data-level="1" data-path="probability_theory.html"><a href="probability_theory.html"><i class="fa fa-check"></i><b>1</b> Probability Theory</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="probability_theory.html"><a href="probability_theory.html#chapter-notes"><i class="fa fa-check"></i><b>1.1</b> Chapter Notes</a></li>
-<li class="chapter" data-level="1.2" data-path="probability_theory.html"><a href="probability_theory.html#questions"><i class="fa fa-check"></i><b>1.2</b> Questions</a></li>
+<li class="chapter" data-level="1.1" data-path="probability_theory.html"><a href="probability_theory.html#chapter-notes"><i class="fa fa-check"></i><b>1.1</b> Chapter Notes</a>
+<ul>
+<li class="chapter" data-level="" data-path="probability_theory.html"><a href="probability_theory.html#counting"><i class="fa fa-check"></i>Counting</a></li>
+<li class="chapter" data-level="" data-path="probability_theory.html"><a href="probability_theory.html#inequalities-bonferronis-and-booles"><i class="fa fa-check"></i>Inequalities: Bonferroni’s and Boole’s</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="probability_theory.html"><a href="probability_theory.html#questions"><i class="fa fa-check"></i><b>1.2</b> Questions</a>
+<ul>
+<li class="chapter" data-level="" data-path="probability_theory.html"><a href="probability_theory.html#ex-1.42"><i class="fa fa-check"></i>Ex 1.42</a></li>
+<li class="chapter" data-level="" data-path="probability_theory.html"><a href="probability_theory.html#ex-1.43"><i class="fa fa-check"></i>Ex 1.43</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="probability_theory.html"><a href="probability_theory.html#further-reading"><i class="fa fa-check"></i>Further Reading</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="transformations.html"><a href="transformations.html"><i class="fa fa-check"></i><b>2</b> Transformations and Expectations</a>
@@ -212,10 +220,212 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 1</span> Probability Theory</h1>
 <div id="chapter-notes" class="section level2" number="1.1">
 <h2><span class="header-section-number">1.1</span> Chapter Notes</h2>
-<p>Deeper dive into unordered with replacement counting.</p>
+<p>This chapter contains fairly standard material on basic probability theory. I won’t summarise it here, but will instead pick out a couple of points to explore further.</p>
+<div id="counting" class="section level3 unnumbered">
+<h3>Counting</h3>
+<p>In the section on counting, we find this table:</p>
+<p><img src="images/Ch01Img01.png" /></p>
+<p>with</p>
+<p><span class="math display">\[
+\binom{n}{r} = \frac{n!}{r!(n-r)!}.
+\]</span>
+The formula for unordered, with replacement counting is the one I find difficult to recreate, so I’ll go into more detail on it here.</p>
+<p>The chapter describes choosing, say, 6 balls from 44 numbered lottery balls. We want to count how many arrangements of these six balls there are, assuming we are choosing with replacement and we don’t care about the order. The chapter encourages re-interpreting this problem as one where you are tasked with distributing 6 markers among 44 labelled buckets. Each bucket can have more than one marker (we are sampling with replacement). Here’s a little illustration I made:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="probability_theory.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Can return to this to attempt to animate it. 10 iterations of six draws each.</span></span>
+<span id="cb1-2"><a href="probability_theory.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Tricky points: </span></span>
+<span id="cb1-3"><a href="probability_theory.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   What if more than one marker in a single bucket? Need to adjust y aes of geom_point</span></span>
+<span id="cb1-4"><a href="probability_theory.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   How best to reset to blank after each 6 draws?</span></span>
+<span id="cb1-5"><a href="probability_theory.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   Consider using 14 buckets instead of 44, a little easier to see what&#39;s happening and a simple change.</span></span>
+<span id="cb1-6"><a href="probability_theory.html#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="probability_theory.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">71</span>)</span>
+<span id="cb1-8"><a href="probability_theory.html#cb1-8" aria-hidden="true" tabindex="-1"></a>draws <span class="ot">&lt;-</span> <span class="fu">sample.int</span>(<span class="dv">44</span>, <span class="at">size =</span> <span class="dv">6</span><span class="sc">*</span><span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>) <span class="co"># we create 10 samples of 6 draws each</span></span>
+<span id="cb1-9"><a href="probability_theory.html#cb1-9" aria-hidden="true" tabindex="-1"></a>sample_num <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">each=</span> <span class="dv">6</span>) <span class="co"># label the samples 1-6</span></span>
+<span id="cb1-10"><a href="probability_theory.html#cb1-10" aria-hidden="true" tabindex="-1"></a>data_count <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">sample_num =</span> sample_num,</span>
+<span id="cb1-11"><a href="probability_theory.html#cb1-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">draw_num =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">60</span>,</span>
+<span id="cb1-12"><a href="probability_theory.html#cb1-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">draws =</span> draws)</span>
+<span id="cb1-13"><a href="probability_theory.html#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="probability_theory.html#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># drawing the buckets</span></span>
+<span id="cb1-15"><a href="probability_theory.html#cb1-15" aria-hidden="true" tabindex="-1"></a>plot_count_background <span class="ot">&lt;-</span> </span>
+<span id="cb1-16"><a href="probability_theory.html#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb1-17"><a href="probability_theory.html#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fl">0.5</span><span class="sc">:</span><span class="fl">44.5</span>,<span class="at">y=</span><span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">45</span>),<span class="at">xend=</span><span class="fl">0.5</span><span class="sc">:</span><span class="fl">44.5</span>,<span class="at">yend=</span><span class="fu">rep</span>(<span class="dv">2</span>,<span class="dv">45</span>)))<span class="sc">+</span></span>
+<span id="cb1-18"><a href="probability_theory.html#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="fl">0.5</span>,<span class="fl">44.5</span>), <span class="at">y=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)))<span class="sc">+</span> </span>
+<span id="cb1-19"><a href="probability_theory.html#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">45</span>), <span class="at">breaks =</span> <span class="dv">2</span><span class="sc">*</span><span class="dv">0</span><span class="sc">:</span><span class="dv">22</span>, <span class="at">name=</span> <span class="st">&quot;Buckets&quot;</span>)<span class="sc">+</span></span>
+<span id="cb1-20"><a href="probability_theory.html#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3</span>), <span class="at">breaks =</span> <span class="cn">NULL</span>, <span class="at">name=</span><span class="cn">NULL</span>)<span class="sc">+</span></span>
+<span id="cb1-21"><a href="probability_theory.html#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-22"><a href="probability_theory.html#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-23"><a href="probability_theory.html#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.border =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb1-24"><a href="probability_theory.html#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="probability_theory.html#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># placing the markers in the buckets</span></span>
+<span id="cb1-26"><a href="probability_theory.html#cb1-26" aria-hidden="true" tabindex="-1"></a>plot_count_background<span class="sc">+</span></span>
+<span id="cb1-27"><a href="probability_theory.html#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span>data_count[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,],<span class="fu">aes</span>(<span class="at">x=</span>draws,<span class="at">y=</span><span class="fu">rep</span>(<span class="fl">0.2</span>,<span class="at">times=</span><span class="dv">6</span>)),</span>
+<span id="cb1-28"><a href="probability_theory.html#cb1-28" aria-hidden="true" tabindex="-1"></a>             <span class="at">size=</span><span class="dv">3</span>, <span class="at">colour=</span> tol_light[[<span class="dv">4</span>]])</span></code></pre></div>
+<p><img src="01-probability_theory_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>How many ways can we arrange these 6 markers across the 44 buckets? We think about taking each of the markers and the bucket walls and placing them in a big bag. Then we draw each of the objects in turn and place them on the table from left to right. In doing this we build up a picture that is equivalent to the one above</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="probability_theory.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># I&#39;m attempting an animation here. It does not work yet.</span></span>
+<span id="cb2-2"><a href="probability_theory.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Main issue is having the plot remember the previous states and add to them rather than writing over</span></span>
+<span id="cb2-3"><a href="probability_theory.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># This was easier in the bar chart example, could just increment the heigh up one</span></span>
+<span id="cb2-4"><a href="probability_theory.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># This time I&#39;m trying to e.g. add entirely new points</span></span>
+<span id="cb2-5"><a href="probability_theory.html#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="probability_theory.html#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">73</span>)</span>
+<span id="cb2-7"><a href="probability_theory.html#cb2-7" aria-hidden="true" tabindex="-1"></a>draw_num <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">49</span></span>
+<span id="cb2-8"><a href="probability_theory.html#cb2-8" aria-hidden="true" tabindex="-1"></a>draws <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">6</span>),<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">43</span>)),<span class="at">size=</span><span class="dv">49</span>, <span class="at">replace=</span><span class="cn">FALSE</span>) <span class="co"># we draw 6 markers (label 0) and 43 walls (label 1) </span></span>
+<span id="cb2-9"><a href="probability_theory.html#cb2-9" aria-hidden="true" tabindex="-1"></a>data_count <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">draw_num =</span> draw_num,</span>
+<span id="cb2-10"><a href="probability_theory.html#cb2-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">draws =</span> draws,</span>
+<span id="cb2-11"><a href="probability_theory.html#cb2-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">wall_count =</span> <span class="fu">cumsum</span>(draws))<span class="sc">%&gt;%</span></span>
+<span id="cb2-12"><a href="probability_theory.html#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb2-13"><a href="probability_theory.html#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">point_x =</span> <span class="fu">ifelse</span>(draws<span class="sc">==</span><span class="dv">0</span>,draw_num,<span class="sc">-</span><span class="dv">5</span>), <span class="co"># shove the points I don&#39;t want off-screen (to -5). v inelegant.</span></span>
+<span id="cb2-14"><a href="probability_theory.html#cb2-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">point_y =</span> <span class="fl">0.2</span>,</span>
+<span id="cb2-15"><a href="probability_theory.html#cb2-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">segment_x =</span> <span class="fu">ifelse</span>(draws<span class="sc">==</span><span class="dv">1</span>,wall_count<span class="fl">+0.5</span>,<span class="sc">-</span><span class="dv">5</span>),</span>
+<span id="cb2-16"><a href="probability_theory.html#cb2-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">segment_y =</span> <span class="dv">0</span>,</span>
+<span id="cb2-17"><a href="probability_theory.html#cb2-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">segment_xend =</span> segment_x,</span>
+<span id="cb2-18"><a href="probability_theory.html#cb2-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">segment_yend =</span> <span class="dv">2</span>)</span>
+<span id="cb2-19"><a href="probability_theory.html#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="probability_theory.html#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_segment(aes(x=0.5:44.5,y=rep(0,45),xend=0.5:44.5,yend=rep(2,45)))+                    </span></span>
+<span id="cb2-21"><a href="probability_theory.html#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="probability_theory.html#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># drawing the buckets</span></span>
+<span id="cb2-23"><a href="probability_theory.html#cb2-23" aria-hidden="true" tabindex="-1"></a>pcb_2 <span class="ot">&lt;-</span> </span>
+<span id="cb2-24"><a href="probability_theory.html#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(data_count)<span class="sc">+</span></span>
+<span id="cb2-25"><a href="probability_theory.html#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data=</span><span class="fu">tibble</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="fl">0.5</span>,<span class="fl">44.5</span>),<span class="at">y=</span><span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">2</span>),<span class="at">xend=</span><span class="fu">c</span>(<span class="fl">0.5</span>,<span class="fl">44.5</span>),<span class="at">yend=</span><span class="fu">rep</span>(<span class="dv">2</span>,<span class="dv">2</span>)),</span>
+<span id="cb2-26"><a href="probability_theory.html#cb2-26" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y,<span class="at">xend=</span>xend,<span class="at">yend=</span>yend))<span class="sc">+</span>  </span>
+<span id="cb2-27"><a href="probability_theory.html#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data=</span> <span class="fu">tibble</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="fl">0.5</span>,<span class="fl">44.5</span>), <span class="at">y=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)),</span>
+<span id="cb2-28"><a href="probability_theory.html#cb2-28" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y))<span class="sc">+</span> </span>
+<span id="cb2-29"><a href="probability_theory.html#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">45</span>), <span class="at">breaks =</span> <span class="dv">2</span><span class="sc">*</span><span class="dv">0</span><span class="sc">:</span><span class="dv">22</span>, <span class="at">name=</span> <span class="st">&quot;Buckets&quot;</span>)<span class="sc">+</span></span>
+<span id="cb2-30"><a href="probability_theory.html#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3</span>), <span class="at">breaks =</span> <span class="cn">NULL</span>, <span class="at">name=</span><span class="cn">NULL</span>)<span class="sc">+</span></span>
+<span id="cb2-31"><a href="probability_theory.html#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb2-32"><a href="probability_theory.html#cb2-32" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb2-33"><a href="probability_theory.html#cb2-33" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.border =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb2-34"><a href="probability_theory.html#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="probability_theory.html#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="co"># placing the markers in the buckets</span></span>
+<span id="cb2-36"><a href="probability_theory.html#cb2-36" aria-hidden="true" tabindex="-1"></a>plot_draws <span class="ot">&lt;-</span> </span>
+<span id="cb2-37"><a href="probability_theory.html#cb2-37" aria-hidden="true" tabindex="-1"></a>pcb_2 <span class="sc">+</span> </span>
+<span id="cb2-38"><a href="probability_theory.html#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>point_x,<span class="at">y=</span>point_y),</span>
+<span id="cb2-39"><a href="probability_theory.html#cb2-39" aria-hidden="true" tabindex="-1"></a>             <span class="at">size=</span><span class="dv">3</span>, <span class="at">colour=</span> tol_light[[<span class="dv">4</span>]])<span class="sc">+</span></span>
+<span id="cb2-40"><a href="probability_theory.html#cb2-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x=</span>segment_x,<span class="at">y=</span>segment_y,<span class="at">xend=</span>segment_xend,<span class="at">yend=</span>segment_yend))<span class="sc">+</span></span>
+<span id="cb2-41"><a href="probability_theory.html#cb2-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>draw_num)</span>
+<span id="cb2-42"><a href="probability_theory.html#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-43"><a href="probability_theory.html#cb2-43" aria-hidden="true" tabindex="-1"></a>anim_draws <span class="ot">&lt;-</span> plot_draws <span class="sc">+</span> </span>
+<span id="cb2-44"><a href="probability_theory.html#cb2-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_null</span>()<span class="sc">+</span> <span class="co"># but instead of facetting by that variable...  </span></span>
+<span id="cb2-45"><a href="probability_theory.html#cb2-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transition_reveal</span>(draw_num) <span class="co"># we include the variable in a gganimate function </span></span>
+<span id="cb2-46"><a href="probability_theory.html#cb2-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-47"><a href="probability_theory.html#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(anim_draws,<span class="at">nframes=</span><span class="dv">350</span>,<span class="at">fps=</span><span class="dv">20</span>, <span class="at">end_pause =</span> <span class="dv">50</span>)</span></code></pre></div>
+<p>We don’t need to consider the end walls, as they don’t help define a bucket, so we have 45-2=43 walls and 6 markers. 49 objects, that can be arranged in 49! ways. However this over-counts. Say we have a marker in bucket 15. We don’t care if this is marker 1, marker 4, or marker 6, since we don’t care about ordering. We have 6 choices for the first marker, 5 for the second, and so on, and so we have over-counted by a factor of 6!. Our count is now <span class="math inline">\(\frac{49!}{6!}\)</span>. The same argument applies to the walls - we don’t care about order here either, and so we are still over-counting by a factor of 43!. Our final count of the number of arrangements is:</p>
+<p><span class="math display">\[
+\frac{49!}{6!43!} = \binom{n+r-1}{r}
+\]</span></p>
+</div>
+<div id="inequalities-bonferronis-and-booles" class="section level3 unnumbered">
+<h3>Inequalities: Bonferroni’s and Boole’s</h3>
+<p>Shortly after probability functions are introduced, the chapter derives the following statement from the axioms of probability:</p>
+<p><span class="math display">\[
+P(A \cup B) = P(A) + P(B) - P(A \cap B)
+\]</span>
+Since probabilities are at most one (and so <span class="math inline">\(P(A \cup B) \leq 1\)</span>), this gives us what the chapter calls a special case of Bonferroni’s inequality:</p>
+<p><span class="math display">\[
+P(A \cap B) \geq P(A) + P(B) - 1.
+\]</span>
+The probability of two events occurring is bounded below by the sum of the individual probabilities less one.</p>
+<p>The chapter also contains a proof of Boole’s inequality, which is closely related on Bonferroni’s:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P\left( \bigcup_{i=1}^{\infty}A_i \right) \leq \sum_{i=1}^{\infty} P(A_i), &amp;&amp; \text{(Boole&#39;s Inequality)}
+\end{aligned}
+\]</span></p>
+<p>The proof starts by defining disjoint sets <span class="math inline">\(A^*_i\)</span> as follows:</p>
+<p><span class="math display">\[
+\begin{aligned}
+A^*_1 = A_1, &amp;&amp; A^*_i = A_i -  \bigcup_{j=1}^{i-1}A_j, &amp;&amp; i=2,3, \dots,
+\end{aligned}
+\]</span>
+Since by this definition we have <span class="math inline">\(\cup_{i=1}^{\infty}A_i= \cup_{i=1}^{\infty}A^*_i\)</span> and the <span class="math inline">\(A^*_i\)</span>s are disjoint, we have:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P\left( \bigcup_{i=1}^{\infty}A_i \right) = P\left( \bigcup_{i=1}^{\infty}A^*_i \right) = \sum_{i=1}^{\infty} P(A^*_i)
+\end{aligned}
+\]</span>
+but by the construction of the <span class="math inline">\(A^*_i\)</span>s this last sum must be less than or equal to <span class="math inline">\(\sum_{i=1}^{\infty} P(A_i)\)</span>, which gives the inequality.</p>
+<p>Boole’s inequality is closely relating to Bonferroni’s in that we can derive Bonferroni’s from Boole’s using De Morgan’s laws:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P\left( \bigcup_{i=1}^{n}A_i^c \right) &amp;\leq \sum_{i=1}^{n} P(A_i^c), &amp;&amp; \text{(Boole&#39;s inequality applied to complements of } A_i) \\
+\implies1-P\left( \bigcap_{i=1}^{n}A_i \right) &amp;\leq n- \sum_{i=1}^{n} P(A_i), &amp;&amp; \text{(De Morgan&#39;s law and } P(A^c)=1-P(A)) \\
+\implies P\left( \bigcap_{i=1}^{n}A_i \right) &amp;\geq \sum_{i=1}^{n} P(A_i) - (n-1), &amp;&amp; \text{(Rearranging terms)}
+\end{aligned}
+\]</span>
+which is a more general version of Bonferroni’s inequality introduced above. We bound below the probability of <span class="math inline">\(n\)</span> events all occurring by the sum of the individual probabilities, less <span class="math inline">\(n-1\)</span>. By the definition of intersections, we can also bound the probability of the intersection above by the minimum probability of any of the individual events <span class="math inline">\(A_i\)</span>.</p>
+<p><span class="math display">\[
+\min_{0\leq i\leq n} P(A_i) \geq P\left( \bigcap_{i=1}^{n}A_i \right) \geq \sum_{i=1}^{n} P(A_i) - (n-1)
+\]</span></p>
+<p>In the chapter appendix, there is a section on an extension of Boole’s inequality for the probability of a union which makes the bounds more precise.</p>
+<p>We start by defining some sums of probabilities of nested intersections:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P_1 &amp;= \sum_{i=1}^n P(A_i) \\
+P_2 &amp;= \sum_{1\leq i&lt;j \leq n}^n P(A_i \cap A_j) \\
+P_3 &amp;= \sum_{1\leq i&lt;j&lt;k \leq n}^n P(A_i \cap A_j \cap A_k) \\
+\vdots\\
+P_n &amp;= P(A_1 \cap A_2 \cap \dots \cap A_n) \\
+\end{aligned}
+\]</span>
+Then</p>
+<p><span class="math display">\[
+P(A_1 \cup A_2 \cup \dots \cup A_n) = P_1 -P_2 +P_3 -P_4 +\dots \pm P_n\\
+\]</span>
+This uses the inclusion-exclusion principles, the extension of:</p>
+<p><span class="math display">\[
+P(A \cup B) = P(A)+P(B)-P(A \cap B)
+\]</span>
+to <span class="math inline">\(n\)</span> sets.</p>
+<p>Let’s assume for now that <span class="math inline">\(P_i \geq P_j\)</span> if <span class="math inline">\(i \leq j\)</span> (we’ll prove this momentarily - it’s left as an exercise in the chapter). Then we have a series of increasingly tight bounds for the probability of the union:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P_1 &amp;\geq P\left(\bigcup_{i=1}^n A_i \right) \geq P_1 - P_2 \\
+P_1 - P_2 + P_3 &amp;\geq P\left(\bigcup_{i=1}^n A_i \right) \geq P_1 - P_2 + P_3 -P_4 \\
+&amp;\vdots
+\end{aligned}
+\]</span></p>
+<p>Which is an extension of Boole’s inequality, which only expressed that the probability of the union was bounded by <span class="math inline">\(P_1\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sum_{i=1}^{\infty} P(A_i) \geq  P\left( \bigcup_{i=1}^{\infty}A_i \right)
+\end{aligned}
+\]</span></p>
+<p>Now we just need to prove that <span class="math inline">\(P_i \geq P_j\)</span> if <span class="math inline">\(i \leq j\)</span>. This is question 1.43 (b) in the chapter, and is done in the question section.</p>
+</div>
 </div>
 <div id="questions" class="section level2" number="1.2">
 <h2><span class="header-section-number">1.2</span> Questions</h2>
+<div id="ex-1.42" class="section level3 unnumbered">
+<h3>Ex 1.42</h3>
+<p><strong>Question</strong></p>
+<blockquote>
+<p>The inclusion-exclusion identity of Miscellanea 1.8.1 gets it name from the fact that it is proved by the method of inclusion and exclusion (Feller 1968, Section IV.1). Here we go into the details. The probability <span class="math inline">\(P(\cup_{i=1}^n A_i)\)</span> is the sum of the probabilities of all the sample points that are contained in at least one of the <span class="math inline">\(A_i\)</span>s. The method of inclusion and exclusion is a recipe for counting these points.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Let <span class="math inline">\(E_k\)</span> denote the set of all sample points that are contained in exactly <span class="math inline">\(k\)</span> of the events <span class="math inline">\(A_1, \dots, A_n\)</span>. Show that <span class="math inline">\(P(\cup_{i=1}^n A_i) = \sum_{i=1}^n P(E_i)\)</span>.</p></li>
+<li><p>If <span class="math inline">\(E_1\)</span> is not empty, show that <span class="math inline">\(P(E_1) = \sum_{i=1}^n P(A_i)\)</span></p></li>
+<li><p>Without loss of generality, assume that <span class="math inline">\(E_k\)</span> is contained in <span class="math inline">\(A_1, A_2, \dots , A_k\)</span>. Show that <span class="math inline">\(P(E_k)\)</span> appears <span class="math inline">\(k\)</span> times in the sum <span class="math inline">\(P_1\)</span>, <span class="math inline">\(\binom{k}{2}\)</span> times in the sum <span class="math inline">\(P_2\)</span>, <span class="math inline">\(\binom{k}{3}\)</span> times in the sum <span class="math inline">\(P_3\)</span>, etc.</p></li>
+<li><p>Show that
+<span class="math display">\[
+k - \binom{k}{2} + \binom{k}{3} - \dots \pm \binom{k}{k} =1
+\]</span>
+(See Exercise 1.27.)</p></li>
+<li><p>Show that parts (a) - (c) imply <span class="math inline">\(\sum_{i=1}^n P(E_i) = P_1 -P_2 +P_3 - \dots \pm P_n\)</span>, establishing the inclusion-exclusion identity.</p></li>
+</ol>
+</blockquote>
+<p><strong>Answer</strong></p>
+</div>
+<div id="ex-1.43" class="section level3 unnumbered">
+<h3>Ex 1.43</h3>
+<p><strong>Question</strong></p>
+<blockquote>
+<p>For the inclusion-exclusion identity of Miscellanea 1.8.1:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Derive both Boole’s and Bonferroni’s Inequality from the inclusion-exclusion identity.</p></li>
+<li><p>Show that the <span class="math inline">\(P_i\)</span> satisfy <span class="math inline">\(P_i \geq P_j\)</span> if <span class="math inline">\(i \leq j\)</span> and that the sequence of bounds in Miscellanea 1.8.1 improves as the number of terms increases.</p></li>
+<li><p>Typically as the number of terms in the bound increases, the bound becomes more useful. However, Schwager (1984) cautions that there are some cases where there is not much improvement, in particular if the <span class="math inline">\(A_i\)</span>s are highly correlated. Examine what happens to the sequence of bounds in the extreme case when <span class="math inline">\(A_i = A\)</span> for every <span class="math inline">\(i\)</span>. (See Worsley 1982 and the correspondence of Worsley 1985 and Schwager 1985.)</p></li>
+</ol>
+</blockquote>
+<p><strong>Answer</strong></p>
+</div>
 </div>
 <div id="further-reading" class="section level2 unnumbered">
 <h2>Further Reading</h2>
