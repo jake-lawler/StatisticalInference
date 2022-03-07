@@ -24,7 +24,7 @@
 <meta name="author" content="Jake Lawler" />
 
 
-<meta name="date" content="2022-02-08" />
+<meta name="date" content="2022-03-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -151,7 +151,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="transformations.html"><a href="transformations.html"><i class="fa fa-check"></i><b>2</b> Transformations and Expectations</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="transformations.html"><a href="transformations.html#chapter-notes-1"><i class="fa fa-check"></i><b>2.1</b> Chapter Notes</a></li>
+<li class="chapter" data-level="2.1" data-path="transformations.html"><a href="transformations.html#chapter-notes-1"><i class="fa fa-check"></i><b>2.1</b> Chapter Notes</a>
+<ul>
+<li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#monotonic-transformations"><i class="fa fa-check"></i>Monotonic Transformations</a></li>
+<li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#generating-random-samples"><i class="fa fa-check"></i>Generating Random Samples</a></li>
+<li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#moment-generating-functions"><i class="fa fa-check"></i>Moment Generating Functions</a></li>
+<li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#differentiating-under-an-integral-sign"><i class="fa fa-check"></i>Differentiating Under an Integral Sign</a></li>
+</ul></li>
 <li class="chapter" data-level="2.2" data-path="transformations.html"><a href="transformations.html#questions-1"><i class="fa fa-check"></i><b>2.2</b> Questions</a>
 <ul>
 <li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#ex-2.1"><i class="fa fa-check"></i>Ex 2.1</a></li>
@@ -171,7 +177,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4" data-path="multiple_variables.html"><a href="multiple_variables.html"><i class="fa fa-check"></i><b>4</b> Multiples Random Variables</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="multiple_variables.html"><a href="multiple_variables.html#chapter-notes-3"><i class="fa fa-check"></i><b>4.1</b> Chapter Notes</a></li>
+<li class="chapter" data-level="4.1" data-path="multiple_variables.html"><a href="multiple_variables.html#chapter-notes-3"><i class="fa fa-check"></i><b>4.1</b> Chapter Notes</a>
+<ul>
+<li class="chapter" data-level="" data-path="multiple_variables.html"><a href="multiple_variables.html#independence"><i class="fa fa-check"></i>Independence</a></li>
+<li class="chapter" data-level="" data-path="multiple_variables.html"><a href="multiple_variables.html#bivariate-transformations"><i class="fa fa-check"></i>Bivariate Transformations</a></li>
+<li class="chapter" data-level="" data-path="multiple_variables.html"><a href="multiple_variables.html#hierarchical-models-and-mixture-distributions"><i class="fa fa-check"></i>Hierarchical Models and Mixture Distributions</a></li>
+<li class="chapter" data-level="" data-path="multiple_variables.html"><a href="multiple_variables.html#covariance-and-correlation"><i class="fa fa-check"></i>Covariance and Correlation</a></li>
+<li class="chapter" data-level="" data-path="multiple_variables.html"><a href="multiple_variables.html#multivariate-distribution"><i class="fa fa-check"></i>Multivariate Distribution</a></li>
+<li class="chapter" data-level="" data-path="multiple_variables.html"><a href="multiple_variables.html#inequalities"><i class="fa fa-check"></i>Inequalities</a></li>
+</ul></li>
 <li class="chapter" data-level="4.2" data-path="multiple_variables.html"><a href="multiple_variables.html#questions-3"><i class="fa fa-check"></i><b>4.2</b> Questions</a>
 <ul>
 <li class="chapter" data-level="" data-path="multiple_variables.html"><a href="multiple_variables.html#ex-4.39"><i class="fa fa-check"></i>Ex 4.39</a></li>
@@ -239,40 +253,40 @@ P(X= x | N, M, K) = \frac{\binom{M}{x} \binom{N-M}{K-x}}{\binom{N}{K}}, &amp;&am
 <li>We then divide this number by the total number of ways to draw <span class="math inline">\(K\)</span> balls from the urn, <span class="math inline">\(\binom{N}{K}\)</span>.</li>
 </ol>
 <p>Here’s an example. We set up an urn with 100 coloured balls, 70 of them red. We draw 20 of these balls without replacement and mark down how many of them are red. We then put those balls back in the urn and shake it up. We repeat this process a total of 150 times and animate the counts:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="families.html#cb3-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">100</span>    <span class="co"># 100 total balls</span></span>
-<span id="cb3-2"><a href="families.html#cb3-2" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="dv">70</span>     <span class="co"># 70 red</span></span>
-<span id="cb3-3"><a href="families.html#cb3-3" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">20</span>     <span class="co"># We draw 20 balls to count how many are red</span></span>
-<span id="cb3-4"><a href="families.html#cb3-4" aria-hidden="true" tabindex="-1"></a>reps <span class="ot">&lt;-</span> <span class="dv">150</span> <span class="co"># We repeat this a total of 150 times</span></span>
-<span id="cb3-5"><a href="families.html#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="families.html#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># A vector of the 150 results, each a number between 0 and 20 representing the number of red balls drawn.</span></span>
-<span id="cb3-7"><a href="families.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">71</span>)</span>
-<span id="cb3-8"><a href="families.html#cb3-8" aria-hidden="true" tabindex="-1"></a>sim_hyp <span class="ot">&lt;-</span> <span class="fu">rhyper</span>(reps, M, N<span class="sc">-</span>M, K)</span>
-<span id="cb3-9"><a href="families.html#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="families.html#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Animation requires we have a data frame that contains the distribution of results at each draw 1-150</span></span>
-<span id="cb3-11"><a href="families.html#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># So the data frame below is a little convoluted</span></span>
-<span id="cb3-12"><a href="families.html#cb3-12" aria-hidden="true" tabindex="-1"></a>results_hyp <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb3-13"><a href="families.html#cb3-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pos_num_red =</span> <span class="fu">rep</span>(<span class="dv">0</span><span class="sc">:</span>K,reps),                </span>
-<span id="cb3-14"><a href="families.html#cb3-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">draw_num =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>reps,<span class="at">each=</span>K<span class="sc">+</span><span class="dv">1</span>))<span class="sc">%&gt;%</span></span>
-<span id="cb3-15"><a href="families.html#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>()<span class="sc">%&gt;%</span></span>
-<span id="cb3-16"><a href="families.html#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">count_obs =</span> <span class="fu">sum</span>(sim_hyp[<span class="dv">1</span><span class="sc">:</span>draw_num]<span class="sc">==</span>pos_num_red)) </span>
-<span id="cb3-17"><a href="families.html#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="families.html#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="families.html#cb3-19" aria-hidden="true" tabindex="-1"></a>plot_hyp <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(results_hyp)<span class="sc">+</span></span>
-<span id="cb3-20"><a href="families.html#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> pos_num_red, <span class="at">y=</span>count_obs), <span class="at">fill =</span> tol_light[[<span class="dv">4</span>]])<span class="sc">+</span></span>
-<span id="cb3-21"><a href="families.html#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Number of Red Balls in the Draw&quot;</span>)<span class="sc">+</span></span>
-<span id="cb3-22"><a href="families.html#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Counts of Results&quot;</span>)<span class="sc">+</span></span>
-<span id="cb3-23"><a href="families.html#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>draw_num) <span class="co"># the code required to animate is the same as if we wanted to facet by some variable</span></span>
-<span id="cb3-24"><a href="families.html#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="families.html#cb3-25" aria-hidden="true" tabindex="-1"></a>anim_hyp <span class="ot">&lt;-</span> plot_hyp <span class="sc">+</span> </span>
-<span id="cb3-26"><a href="families.html#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_null</span>()<span class="sc">+</span> <span class="co"># but instead of facetting by that variable...  </span></span>
-<span id="cb3-27"><a href="families.html#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">x =</span> <span class="dv">4</span> , <span class="at">y =</span> <span class="dv">28</span>, </span>
-<span id="cb3-28"><a href="families.html#cb3-28" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">&quot;Draws Performed: &quot;</span>,<span class="fu">as.character</span>(draw_num))),  </span>
-<span id="cb3-29"><a href="families.html#cb3-29" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">5</span>)<span class="sc">+</span></span>
-<span id="cb3-30"><a href="families.html#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transition_states</span>(draw_num, <span class="co"># we include the variable in a gganimate function </span></span>
-<span id="cb3-31"><a href="families.html#cb3-31" aria-hidden="true" tabindex="-1"></a>                    <span class="at">transition_length =</span> <span class="dv">3</span>,</span>
-<span id="cb3-32"><a href="families.html#cb3-32" aria-hidden="true" tabindex="-1"></a>                    <span class="at">state_length =</span> <span class="dv">1</span>)</span>
-<span id="cb3-33"><a href="families.html#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-34"><a href="families.html#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(anim_hyp,<span class="at">nframes=</span><span class="dv">350</span>,<span class="at">fps=</span><span class="dv">20</span>, <span class="at">end_pause =</span> <span class="dv">50</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="families.html#cb7-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">100</span>    <span class="co"># 100 total balls</span></span>
+<span id="cb7-2"><a href="families.html#cb7-2" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="dv">70</span>     <span class="co"># 70 red</span></span>
+<span id="cb7-3"><a href="families.html#cb7-3" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">20</span>     <span class="co"># We draw 20 balls to count how many are red</span></span>
+<span id="cb7-4"><a href="families.html#cb7-4" aria-hidden="true" tabindex="-1"></a>reps <span class="ot">&lt;-</span> <span class="dv">150</span> <span class="co"># We repeat this a total of 150 times</span></span>
+<span id="cb7-5"><a href="families.html#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="families.html#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># A vector of the 150 results, each a number between 0 and 20 representing the number of red balls drawn.</span></span>
+<span id="cb7-7"><a href="families.html#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">71</span>)</span>
+<span id="cb7-8"><a href="families.html#cb7-8" aria-hidden="true" tabindex="-1"></a>sim_hyp <span class="ot">&lt;-</span> <span class="fu">rhyper</span>(reps, M, N<span class="sc">-</span>M, K)</span>
+<span id="cb7-9"><a href="families.html#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="families.html#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Animation requires we have a data frame that contains the distribution of results at each draw 1-150</span></span>
+<span id="cb7-11"><a href="families.html#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># So the data frame below is a little convoluted</span></span>
+<span id="cb7-12"><a href="families.html#cb7-12" aria-hidden="true" tabindex="-1"></a>results_hyp <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb7-13"><a href="families.html#cb7-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pos_num_red =</span> <span class="fu">rep</span>(<span class="dv">0</span><span class="sc">:</span>K,reps),                </span>
+<span id="cb7-14"><a href="families.html#cb7-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">draw_num =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>reps,<span class="at">each=</span>K<span class="sc">+</span><span class="dv">1</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb7-15"><a href="families.html#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb7-16"><a href="families.html#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">count_obs =</span> <span class="fu">sum</span>(sim_hyp[<span class="dv">1</span><span class="sc">:</span>draw_num]<span class="sc">==</span>pos_num_red)) </span>
+<span id="cb7-17"><a href="families.html#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="families.html#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="families.html#cb7-19" aria-hidden="true" tabindex="-1"></a>plot_hyp <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(results_hyp)<span class="sc">+</span></span>
+<span id="cb7-20"><a href="families.html#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> pos_num_red, <span class="at">y=</span>count_obs), <span class="at">fill =</span> tol_light[[<span class="dv">4</span>]])<span class="sc">+</span></span>
+<span id="cb7-21"><a href="families.html#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Number of Red Balls in the Draw&quot;</span>)<span class="sc">+</span></span>
+<span id="cb7-22"><a href="families.html#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Counts of Results&quot;</span>)<span class="sc">+</span></span>
+<span id="cb7-23"><a href="families.html#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>draw_num) <span class="co"># the code required to animate is the same as if we wanted to facet by some variable</span></span>
+<span id="cb7-24"><a href="families.html#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="families.html#cb7-25" aria-hidden="true" tabindex="-1"></a>anim_hyp <span class="ot">&lt;-</span> plot_hyp <span class="sc">+</span> </span>
+<span id="cb7-26"><a href="families.html#cb7-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_null</span>()<span class="sc">+</span> <span class="co"># but instead of facetting by that variable...  </span></span>
+<span id="cb7-27"><a href="families.html#cb7-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">x =</span> <span class="dv">4</span> , <span class="at">y =</span> <span class="dv">28</span>, </span>
+<span id="cb7-28"><a href="families.html#cb7-28" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">&quot;Draws Performed: &quot;</span>,<span class="fu">as.character</span>(draw_num))),  </span>
+<span id="cb7-29"><a href="families.html#cb7-29" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">5</span>)<span class="sc">+</span></span>
+<span id="cb7-30"><a href="families.html#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transition_states</span>(draw_num, <span class="co"># we include the variable in a gganimate function </span></span>
+<span id="cb7-31"><a href="families.html#cb7-31" aria-hidden="true" tabindex="-1"></a>                    <span class="at">transition_length =</span> <span class="dv">3</span>,</span>
+<span id="cb7-32"><a href="families.html#cb7-32" aria-hidden="true" tabindex="-1"></a>                    <span class="at">state_length =</span> <span class="dv">1</span>)</span>
+<span id="cb7-33"><a href="families.html#cb7-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-34"><a href="families.html#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(anim_hyp,<span class="at">nframes=</span><span class="dv">350</span>,<span class="at">fps=</span><span class="dv">20</span>, <span class="at">end_pause =</span> <span class="dv">50</span>)</span></code></pre></div>
 <p><img src="03-families_files/figure-html/unnamed-chunk-2-1.gif" /><!-- --></p>
 <p>As we might expected, the most common results we see are those close to <span class="math inline">\(70/100 \times 20 = 14\)</span> red balls, reflecting the proportion we know are in the urn.</p>
 </div>

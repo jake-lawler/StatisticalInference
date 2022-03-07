@@ -24,7 +24,7 @@
 <meta name="author" content="Jake Lawler" />
 
 
-<meta name="date" content="2022-02-08" />
+<meta name="date" content="2022-03-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -151,7 +151,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="transformations.html"><a href="transformations.html"><i class="fa fa-check"></i><b>2</b> Transformations and Expectations</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="transformations.html"><a href="transformations.html#chapter-notes-1"><i class="fa fa-check"></i><b>2.1</b> Chapter Notes</a></li>
+<li class="chapter" data-level="2.1" data-path="transformations.html"><a href="transformations.html#chapter-notes-1"><i class="fa fa-check"></i><b>2.1</b> Chapter Notes</a>
+<ul>
+<li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#monotonic-transformations"><i class="fa fa-check"></i>Monotonic Transformations</a></li>
+<li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#generating-random-samples"><i class="fa fa-check"></i>Generating Random Samples</a></li>
+<li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#moment-generating-functions"><i class="fa fa-check"></i>Moment Generating Functions</a></li>
+<li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#differentiating-under-an-integral-sign"><i class="fa fa-check"></i>Differentiating Under an Integral Sign</a></li>
+</ul></li>
 <li class="chapter" data-level="2.2" data-path="transformations.html"><a href="transformations.html#questions-1"><i class="fa fa-check"></i><b>2.2</b> Questions</a>
 <ul>
 <li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#ex-2.1"><i class="fa fa-check"></i>Ex 2.1</a></li>
@@ -171,7 +177,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4" data-path="multiple_variables.html"><a href="multiple_variables.html"><i class="fa fa-check"></i><b>4</b> Multiples Random Variables</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="multiple_variables.html"><a href="multiple_variables.html#chapter-notes-3"><i class="fa fa-check"></i><b>4.1</b> Chapter Notes</a></li>
+<li class="chapter" data-level="4.1" data-path="multiple_variables.html"><a href="multiple_variables.html#chapter-notes-3"><i class="fa fa-check"></i><b>4.1</b> Chapter Notes</a>
+<ul>
+<li class="chapter" data-level="" data-path="multiple_variables.html"><a href="multiple_variables.html#independence"><i class="fa fa-check"></i>Independence</a></li>
+<li class="chapter" data-level="" data-path="multiple_variables.html"><a href="multiple_variables.html#bivariate-transformations"><i class="fa fa-check"></i>Bivariate Transformations</a></li>
+<li class="chapter" data-level="" data-path="multiple_variables.html"><a href="multiple_variables.html#hierarchical-models-and-mixture-distributions"><i class="fa fa-check"></i>Hierarchical Models and Mixture Distributions</a></li>
+<li class="chapter" data-level="" data-path="multiple_variables.html"><a href="multiple_variables.html#covariance-and-correlation"><i class="fa fa-check"></i>Covariance and Correlation</a></li>
+<li class="chapter" data-level="" data-path="multiple_variables.html"><a href="multiple_variables.html#multivariate-distribution"><i class="fa fa-check"></i>Multivariate Distribution</a></li>
+<li class="chapter" data-level="" data-path="multiple_variables.html"><a href="multiple_variables.html#inequalities"><i class="fa fa-check"></i>Inequalities</a></li>
+</ul></li>
 <li class="chapter" data-level="4.2" data-path="multiple_variables.html"><a href="multiple_variables.html#questions-3"><i class="fa fa-check"></i><b>4.2</b> Questions</a>
 <ul>
 <li class="chapter" data-level="" data-path="multiple_variables.html"><a href="multiple_variables.html#ex-4.39"><i class="fa fa-check"></i>Ex 4.39</a></li>
@@ -263,7 +277,7 @@ The formula for unordered, with replacement counting is the one I find difficult
 <p>How many ways can we arrange these 6 markers across the 44 buckets? We think about taking each of the markers and the bucket walls and placing them in a big bag. Then we draw each of the objects in turn and place them on the table from left to right. In doing this we build up a picture that is equivalent to the one above</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="probability_theory.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># I&#39;m attempting an animation here. It does not work yet.</span></span>
 <span id="cb2-2"><a href="probability_theory.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Main issue is having the plot remember the previous states and add to them rather than writing over</span></span>
-<span id="cb2-3"><a href="probability_theory.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># This was easier in the bar chart example, could just increment the heigh up one</span></span>
+<span id="cb2-3"><a href="probability_theory.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># This was easier in the bar chart example, could just increment the height up one</span></span>
 <span id="cb2-4"><a href="probability_theory.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># This time I&#39;m trying to e.g. add entirely new points</span></span>
 <span id="cb2-5"><a href="probability_theory.html#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-6"><a href="probability_theory.html#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">73</span>)</span>
@@ -386,7 +400,7 @@ P_1 - P_2 + P_3 &amp;\geq P\left(\bigcup_{i=1}^n A_i \right) \geq P_1 - P_2 + P_
 <p>Which is an extension of Boole’s inequality, which only expressed that the probability of the union was bounded by <span class="math inline">\(P_1\)</span>:</p>
 <p><span class="math display">\[
 \begin{aligned}
-\sum_{i=1}^{\infty} P(A_i) \geq  P\left( \bigcup_{i=1}^{\infty}A_i \right)
+P_1=\sum_{i=1}^{\infty} P(A_i) \geq  P\left( \bigcup_{i=1}^{\infty}A_i \right)
 \end{aligned}
 \]</span></p>
 <p>Now we just need to prove that <span class="math inline">\(P_i \geq P_j\)</span> if <span class="math inline">\(i \leq j\)</span>. This is question 1.43 (b) in the chapter, and is done in the question section.</p>
