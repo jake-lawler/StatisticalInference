@@ -69,7 +69,7 @@ How many ways can we arrange these 6 markers across the 44 buckets? We think abo
 
 # I'm attempting an animation here. It does not work yet.
 # Main issue is having the plot remember the previous states and add to them rather than writing over
-# This was easier in the bar chart example, could just increment the heigh up one
+# This was easier in the bar chart example, could just increment the height up one
 # This time I'm trying to e.g. add entirely new points
 
 set.seed(73)
@@ -217,7 +217,7 @@ Which is an extension of Boole's inequality, which only expressed that the proba
 
 $$
 \begin{aligned}
-\sum_{i=1}^{\infty} P(A_i) \geq  P\left( \bigcup_{i=1}^{\infty}A_i \right)
+P_1=\sum_{i=1}^{\infty} P(A_i) \geq  P\left( \bigcup_{i=1}^{\infty}A_i \right)
 \end{aligned}
 $$
 

@@ -2,6 +2,49 @@
 
 ## Chapter Notes
 
+random sample - iid, joint pdf,
+
+sampling without replacement from finite nearly like def 5.1.1
+
+statistic def 5.2.1
+
+theorem 5.2.6 - unbiased 
+
+section 5.3
+
+5.3.1
+
+section 5.3.2 - t and f - all of this section up to theorem 5.3.8
+
+skip 5.4
+
+5.5
+
+conver in prob
+
+5.5.2
+
+5.5.2 almost sure conv
+
+strong law
+
+conv in distribution
+
+5.5.14 - central limit
+
+stronger fotrm - 5.5.15
+
+example 5.5.16
+
+taylor series into delta method
+
+
+
+
+
+
+
+
 
 ## Questions
 

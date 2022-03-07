@@ -2,6 +2,194 @@
 
 ## Chapter Notes
 
+This chapter describes probability concepts when we have more than one random variable. Introduced are:
+
+* N-dimensional random vectors
+* Joint probability mass functions
+* Expectations with joint pmfs
+* Marginal pmfs
+* Joint probability density functions
+* Expectations with joint pdfs
+* Marginal pdfs - with some useful tips for performing the integrations required
+* Joint cdfs
+* Conditional pmfs and pdfs
+
+### Independence {-}
+
+We can:
+
+1. Check whether two random variables $X$ and $Y$ are independent given a joint pmf/pdf, or 
+2. Define a model in which $X$ and $Y$ are independent
+
+using the definition below.
+
+**Definition 4.2.5 - Independence**
+
+Let $(X,Y)$ be a bivariate random vector with joint pmf/pdf $f(x,y)$ and marginal pmfs/pdfs $f_X(x)$ and $f_Y(y)$. We say $X$ and $Y$ are *independent random variables* if for every $x \in \mathcal{R}$, $y \in \mathcal{R}$
+
+$$
+f(x,y)=f_X(x)f_Y(y).
+$$
+
+Here's a Lemma that makes checking independence easier:
+
+**Lemma 4.2.7**
+
+Let $(X,Y)$ be a bivariate random vector with joint pmf/pdf $f(x,y)$. Then $X$ and $Y$ are independent random variables if and only if there exist functions $g(x)$ and $h(y)$ such that for every $x \in \mathcal{R}$, $y \in \mathcal{R}$,
+
+$$
+f(x,y)=g(x)h(y).
+$$
+The proof is surprisingly straightforward (p153.)
+
+The expectation of the product of functions of independent random variables is the product of the expectations:
+
+$$
+E(g(X)h(y))=(Eg(X))(Eh(y))
+$$
+
+### Bivariate Transformations {-}
+
+This section is about the distribution of functions of bivariate random vectors. As an example the chapter demonstrates that if $X \sim \text{Poisson}(\theta)$ and $Y \sim \text{Poisson}(\lambda)$, and $X$ and $Y$ are independent then $X +Y \sim \text{Poisson}(\theta+\lambda)$.
+
+There are similar cases in the chapter for the product of beta variables, and the sum, differences, and ratio of normal variables.
+
+### Hierarchical Models and Mixture Distributions {-}
+
+The first example in this section is the Binomial-Poisson hierarchy. Say an insect lays a large number of eggs (we might model this with a Poisson distribution). Each of the eggs have, say, probability $p$ of surviving (we use a binomial). How many surviving eggs are there? If we use $X$ to mean the number of surviving eggs and $Y$ to mean the number of eggs laid we can write down a hierarchical model:
+
+$$
+\begin{aligned}
+X|Y &\sim \text{binomial}(Y,p) \\
+Y &\sim \text{Poisson}(\lambda)
+\end{aligned}
+$$
+
+Here we model $Y$ with a Poisson distribution and then use $Y$ inside on a binomial distribution. When our distribution depends on a quantity that also has a distribution we call it a *mixture distribution*.
+
+The section contains a couple of useful theorems for conditional expectations and variances.
+
+**Theorem 4.4.3 - Conditional Expectation**
+
+If $X$ and $Y$ are any two random variables, then
+
+$$
+EX = E(E(X|Y))
+$$
+provided that the expectations exist. $E$ here stands for a couple different things. There shouldn't be confusion but if we want to nitpick we should write:
+
+$$
+E_XX = E_Y(E_{X|Y}(X|Y)).
+$$
+The proof starts by writing down the definition of $EX$ and then using the (rearranged) definition of conditional probability $f(x,y)=f(x|y)f(y)$:
+
+$$
+\begin{aligned}
+E_XX = \int\int x  f(x,y) dxdy &= \int \left[ \int xf(x|y)dx\right]f_Y(y)dy \\
+&= \int \left[E_{X|Y}(X|y)\right]f_Y(y)dy\\
+&= E_Y(E_{X|Y}(X|Y)).
+\end{aligned}
+$$
+Applying this to the insect example, our expected number of survivors becomes:
+
+$$
+\begin{aligned}
+EX &= E(E(X|Y))\\
+&= E(pY) && (\text{since } X|Y \sim \text{binomial}(Y,p))\\
+&= p \lambda && (\text{since } Y \sim \text{Poisson}(\lambda)).
+\end{aligned}
+$$
+What about conditional variances?
+
+**Theorem 4.4.7 - Conditional Variance**
+
+If $X$ and $Y$ are any two random variables, then
+
+$$
+\text{Var}(X) = E( \text{Var}(X|Y)) + \text{Var}(E(X|Y)),
+$$
+provided the expectations exist.
+
+
+### Covariance and Correlation {-}
+
+This section introduces measures of the *strength* of the relationship between two random variables.
+
+We have the covariance:
+
+$$
+\begin{aligned}
+\text{Cov}(X,Y) &= E((X-\mu_x)(Y-\mu_y)) \\
+&= EXY-\mu_x\mu_Y && \text{this is Theorem 4.5.3 in the chapter}
+\end{aligned}
+$$
+
+and the correlation:
+
+$$
+\rho_{XY} = \frac{\text{Cov}(X,Y)}{\sigma_x \sigma_Y}
+$$
+
+Independence implies covariance and correlation of 0, but the reverse is not true (Theorem 4.5.5).
+
+Covariance is important for measuring variation in the sums of random variables:
+
+**Theorem 4.5.6**
+
+If $X$ and $Y$ are any two random variables and $a$ and $b$ are any two constants then
+
+$$
+\text{Var}(aX + bY) = a^2 \text{Var}(X) + b^2 \text{Var}(Y) + 2ab \text{Cov}(X,Y)
+$$
+
+### Multivariate Distribution {-}
+
+The chapter extends discussion to multivariate random vectors $(X_1, \dots\ X_n)$.
+
+One example is the multinomial - generalising the binomial into situations with $n$ (instead of 2) outcomes.
+
+**Definition 4.6.2 - The Multinomial Distribution**
+
+Let $n$ and $m$ be positive integers and let $p_1, \dots, p_n$ be numbers satisfying $0\leq p_i \leq 1$ and $\sum_{i=1}^n p_i = 1$. Then the random vector $(X_1, \dots, X_n)$ has a multinomial distribution with $m$ trials and cell probabilities $p_1, \dots, p_n$ if the joint pmf of $(X_1, \dots, X_n)$ is:
+
+$$
+f(x_1, \dots, x_n) = \frac{m!}{x_1!\dots x_n!}p_1^{x_1} \dots p_n^{x_n} = m! \prod_{i=1}^n \frac{p_i^{x_i}}{x_i!}
+$$
+on the set of $(x_1, \dots, x_n)$ such that each $x_i$ is a nonnegative integer and they sum to $m$.
+
+The factor $\frac{m!}{x_1!\dots x_n!}$ is the multinomial coefficient. The number of ways that M objects can be divided into $n$ groups with $x_i$ in the $i$th group. We also have the multinomial theorem as an extension of the binomial theorem:
+
+**Theorem 4.6.4 - The Multinomial Theorem**
+
+Let $n$ and $m$ be positive integers and let $\mathcal A$ be the set of vectors $\mathbf{x} = (x_1, \dots, x_n)$ such that each $x_i$ is a nonnegative integer and they sum to $m$. Then, for *any real numbers* $p_1, \dots, p_n$,
+
+$$
+(p_1, \dots, p_n)^m = \sum_{\mathbf{x} \in \mathcal A}\frac{m!}{x_1!\dots x_n!}p_1^{x_1} \dots p_n^{x_n}
+$$
+
+Marginalising the multinomial distribution returns the binomial, as you'd expect. The distribution of $(X_1, \dots X_{n-1})$ given $X_n = x_n$ is multinomial.
+
+Exercise 4.39 (which I hope to do below) shows that all the pairwise covariances of our $X_i$s are negative and are given by:
+
+$$
+\text{Cov}(X_i,X_j) = E[(X_i -p_i)(X_j - p_j)] = -mp_ip_j
+$$
+
+The negative correlation is greater for variables with higher success probabilities.
+
+### Inequalities {-}
+
+The chapter closes with a section introducing a number of hugely important inequalities:
+
+* Holder's Inequality
+* Cauchy-Schwarz Inequality
+* Covariance Inequality
+* Liapounov's Inequality
+* Minkowski's Inequality
+* Jensen's Inequality
+
+
+
 
 ## Questions
 
