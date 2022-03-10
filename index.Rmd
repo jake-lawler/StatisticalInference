@@ -39,7 +39,12 @@ To revisit:
 * Chapter 4
   + Expand the section on inequalities.
   + Exercise 4.39
-* Chapter 5 - 12 not yet complete.
+* Chapter 5
+  + Proof of WLLN
+  + Expand the section on the Delta method
+  + Indirect random variable generation section
+  + add some animations. e.g. example 5.5.16 (normal approx to neg binomial) or direct & indirect random variable generation
+* Chapter 6- 12 not yet complete.
 
 
 

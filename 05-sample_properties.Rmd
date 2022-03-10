@@ -2,48 +2,270 @@
 
 ## Chapter Notes
 
-random sample - iid, joint pdf,
+A random sample of size $n$ means we have $n$ mutually independent and identically distributed random variables $X_1, \dots, X_n$. Because they are all independent and have the same marginal pdf, their joint pdf is given by:
 
-sampling without replacement from finite nearly like def 5.1.1
+$$
+f(x_1, \dots x_n) = f(x_1)f(x_2)\dots f(x_n) = \prod_{i=1}^n f(x_i)
+$$
+and we can use it to calculate the probabilities related to our sample.
 
-statistic def 5.2.1
+This definition of a random sample is called sampling from an *infinite* population. However we're very often interested in working with *finite* populations. If we're sampling with replacement - the conditions of our definition of a random sample are met, but if we're sampling without replacement from a finite population, our random variables are no longer independent.
 
-theorem 5.2.6 - unbiased 
+Sampling from a finite population without replacement is sometimes called *simple random sampling*. It doesn't meet the criteria of our definition above, but if population size $N$ is large enough relative to our sample size $n$, we might say that the samples are *nearly independent*. This means that the conditional distribution of $X_i$ given the other $n-1$ random variables is not too dissimilar from the marginal distribution of $X_i$.
 
-section 5.3
+### Sums of Random Variables from a Random Sample {-}
 
-5.3.1
+So what can we do with these random samples? The chapter introduces the concept of a *statistic*
 
-section 5.3.2 - t and f - all of this section up to theorem 5.3.8
+If we have a real-valued (or vector-valued) function $T$ whose domain includes the sample space of ($X_1, \dots, X_n$), then we call the random variable (or random vector) $Y = T(X_1, \dots, X_n)$ a statistic. We call the probability distribution of $Y$ the *sampling distribution* of $Y$.
 
-skip 5.4
+The chapter notes that the definition of a statistic is very broad, but notes that it cannot be a function of a parameter - it is a function of the sample only. Examples might include the average sample value, the highest and lowest values in the sample, some measure of variability in the sample etc.
 
-5.5
+The sample mean statistic is: 
+$$
+\overline X = \frac{1}{n} \sum_{i=1}^n X_i
+$$
+The sample variance statistic is:
+$$
+S^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i -\overline X)^2 = \frac{1}{n-1}\left( \sum_{i=1}^n X_i^2 - n\overline X^2 \right)
+$$
 
-conver in prob
+with the last equality because the sum of all $x_i - \overline x$ is 0.
 
-5.5.2
+We have the $n-1$ is the denominator of the sample variance. The following theorem shows why:
 
-5.5.2 almost sure conv
+**Theorem 5.2.6 - Unbiased Estimators**
 
-strong law
+Let $X_1, \dots X_n$ be a random sample from a population with mean $\mu$ and variance $\sigma^2 < \infty$. Then:
 
-conv in distribution
+a. $E\overline X = \mu$
+b.$\text{Var}(\overline X) = \frac{\sigma^2}{n}$
+c. $E S^2 = \sigma^2$
 
-5.5.14 - central limit
+I'll focus on part c - that the sample variance defined above is an *unbiased estimator* of the population variance. Here's the proof:
 
-stronger fotrm - 5.5.15
+$$
+\begin{aligned}
+ES^2 &= E\left( \frac{1}{n-1} \left[ \sum_{i=1}^n X_i^2 - n\overline X^2 \right] \right) \\
+&= \frac{1}{n-1} \left( nEX_1^2 - n E\overline X^2 \right)  \\
+&= \frac{1}{n-1} \left( n(\sigma^2 + \mu^2) - n \left( \frac{\sigma^2}{n} + \mu^2\right) \right)  \\
+&= \frac{n\sigma^2}{n-1} + \frac{n\mu^2}{n-1} -  \frac{\sigma^2}{n-1} - \frac{n\mu^2}{n-1} =  \frac{(n-1)\sigma^2}{n-1}  \\
+&= \sigma^2
+\end{aligned}
+$$
 
-example 5.5.16
+The third equality comes from rearranging the property of variances $\text{Var}(X) = E(X^2) - E(X)^2$, and from the expression for the variance of the sample mean in part b of the theorem. Note that if the sampling variance had used an $n$ in the denominator rather than an $n-1$, the expected value of $S^2$ would be $\frac{n-1}{n}\sigma^2$.
 
-taylor series into delta method
+### Sums from the Normal Distribution {-}
+
+The properties of our sample mean and variance above required very few conditions. When we add the additional assumptions of normality, we can derive a lot more.
+
+**Theorem 5.3.1** in the book states that if we have a random sample drawn from a $\text{Normal}(\mu, \sigma^2)$ distribution, we have:
+
+a. $\overline X$ and $S^2$ are independent random variables
+b. $\overline X$ has a a $\text{Normal}(\mu, \sigma^2/n)$ distribution
+c. $\frac{(n-1)S^2}{\sigma^2}$ has a chi-squared distribution with $n-1$ degrees of freedom.
+
+Here are some facts about chi-squared random variables from **Lemma 5.3.2**
+
+a. The square of a standard normal ($\text{Normal}(0,1)$) random variable is a chi-squared random variable with degree 1 ($Z^2 \sim \chi^2_1$).
+b. Independent chi-squared variables add to a chi-squared variable, and their degrees of freedom also add: $X_1 + \dots + X_n \sim \chi^2_{p_1 + \dots + p_n}$ if $X_i \sim \chi^2_{p_i}$ and the $X_i$s are independent.
+
+In most practical cases, our population variance $\sigma^2$ is unknown. So if we want to estimate the variability of $\overline X$ as part of making inferences about $\mu$, we need a way to estimate $\sigma^2$.
+
+For a random sample of size $n$ from a $\text{Normal}(\mu,\sigma^2)$ distribution, we know that
+
+$$
+\frac{\overline X - \mu}{\sigma/\sqrt n}
+$$
+
+has a $\text{Normal}(0,1)$ distribution. W.S. Gosset introduced the Student's t-distribution, and showed that
+
+$$
+\frac{\overline X - \mu}{S/\sqrt n}
+$$
+
+has Student's t distribution with $n-1$ degrees of freedom. The pdf with $p$ degrees of freedom is:
+
+$$
+f_{T}(t)=\frac{\Gamma\left(\frac{p-1}{2}\right)}{\Gamma\left(\frac{p}{2}\right)} \frac{1}{(p \pi)^{1 / 2}} \frac{1}{\left(1+t^{2} / p\right)^{(p+1) / 2}}, \quad-\infty<t<\infty
+$$
+
+We have properties:
+
+$$
+\begin{aligned}
+\mathrm{E} T_{p}&=0, \quad \text{if } p>1 \\
+\operatorname{Var} T_{p}&=\frac{p}{p-2}, \quad \text{if } p>2
+\end{aligned}
+$$
+
+The chapter also introduces Snedecor's F distribution, which is used for comparing the variability of two different populations. Say we have $n$ random variables $X_i$ from a $\text{Normal}(\mu_X,\sigma^2_X)$ distribution, and $m$ random variables $Y_i$ from a $\text{Normal}(\mu_Y,\sigma^2_Y)$ distribution. The random variable:
+
+$$
+F = \frac{S_{X}^{2} / S_{Y}^{2}}{\sigma_{X}^{2} / \sigma_{Y}^{2}}=\frac{S_{X}^{2} / \sigma_{X}^{2}}{S_{Y}^{2} / \sigma_{Y}^{2}}
+$$
+
+has F distribution with $n-1$ and $m-1$ degrees of freedom. Here's the pdf of a $F_{p,q}$ distribution:
+
+$$
+f_{F}(x)=\frac{\Gamma\left(\frac{p+q}{2}\right)}{\Gamma\left(\frac{p}{2}\right) \Gamma\left(\frac{q}{2}\right)}\left(\frac{p}{q}\right)^{p / 2} \frac{x^{(p / 2)-1}}{[1+(p / q) x]^{(p+q) / 2}}, \quad 0<x<\infty
+$$
+
+### Convergence Concepts {-}
+
+Here's a nice summary from the chapter about what this section is all about:
+
+> This section treats the somewhat fanciful idea of allowing the sample size to approach infinity and investigates the behavior of certain sample quantities as this happens. Although the notion of an infinite sample size is a theoretical artifact, it can often provide us with some useful approximations for the finite-sample case, since it usually happens that expressions become simplified in the limit.
+
+We'll see three notions of convergence: convergence in probability, almost sure convergence, and convergence in distribution.
+
+**Definition 5.5.1 Convergence in Probability**
+
+A sequence of random variables $X_1, X_2, \dots$ convergences in probability to a random variable $X$ if for every $\epsilon >0$
+
+$$
+\lim_{n \to \infty} P(|X_n - X| \geq \epsilon) = 0
+$$
+or equivalently
+
+$$
+\lim_{n \to \infty} P(|X_n - X| < \epsilon) = 1
+$$
+
+The $X_i$s here are typically not i.i.d, the distributions change as the sequence progresses.
+
+The Weak Law of Large Numbers concerns a situation where $X$ is a constant, and the random variables in the sequence are sample means:
+
+**Theorem 5.5.2 The Weak Law of Large Numbers**
+
+Let $X_1, X_2, \dots$ be i.i.d with $EX_i = \mu$ and $\text{Var}(X_i) = \sigma^2 < \infty$. Define $\overline X = 1/n \sum_{i=1}^n X_i$. Then for every $\epsilon > e$,
+
+$$
+\lim_{n \to \infty} P(|\overline X_n - \mu| < \epsilon) = 1
+$$
+I.e. our sample means converge in probability to $\mu$.
+
+The proof is a two-line application of Chebychev's Inequality. Revisit once I've returned to the inequality section of chapter four.
+
+If random variables $X_1, X_2, \dots$ converge in probability to $X$, then $h(X_1), h(X_2), \dots$ converges in probability to $h(X)$, for continous function $h$.
+
+**Definition 5.5.6 Almost Sure Convergence**
+
+A sequence of random variables $X_1, X_2, \dots$ convergences almost surely to a random variable $X$ if for every $\epsilon >0$
+
+$$
+P(\lim_{n \to \infty} |X_n - X| < \epsilon) = 1
+$$
+
+This is a much stronger condition, and almost-sure convergence implies convergence in probability.  From the chapter:
+
+> To understand almost sure convergence, we must recall the basic definition of a random variable as given in Definition 1.4.1. A random variable is a real-valued function defined on a sample space $S$. If a sample space $S$ has elements denoted by $s$, then $X_n(s)$ and $X(s)$ are all functions defined on $S$. Definition 5.5.6 states that $X_n$ converges to $X$ almost surely if the functions $X_n(s)$ converge to $X(s)$ for all $s \in S$ except perhaps for $s \in N$, where $N \subset S$ and $P(N) = 0$.
+
+As stated in that paragraph, convergence need not happen on sets with probability 0, which is why this is called "almost-sure" convergence.
+
+As an example, the chapter uses $X_n(s) = s+s^n$ and $X(s)=s$, where $s \in [0,1]$. $X_n$ converges to $X$ everywhere except 1.
+
+As an example of a sequence that converges in probability but not almost surely, the chapter uses $X(s) = s$ and:
+
+$$
+\begin{aligned}
+X_1(s) &= s+I_{[0,1]}(s) \\
+X_2(s) &= s+I_{[0,\frac{1}{2}]}(s) \\
+X_3(s) &= s+I_{[\frac{1}{2},1]}(s) \\
+X_4(s) &= s+I_{[0,\frac{1}{3}]}(s) \\
+X_5(s) &= s+I_{[\frac{1}{3},\frac{2}{3}]}(s) \\
+X_6(s) &= s+I_{[\frac{2}{3},1]}(s) \\
+&\vdots
+\end{aligned}
+$$
+
+for $s \in S = [0,1]$. 
+
+The probability that $|X_n - X| \geq \epsilon$ is the probability of an interval with length going to 0 - so the sequence converges in probability.
+
+However the sequence does not converge almost surely, and in fact there is no $s$ such that $X_n(s) \to s = X(s)$. For any $s$ the sequence will alternate between $s$ and $s+1$ infinitely often. Almost sure convergence requires convergence everywhere except perhaps sets with probability 0. The sequence above has convergence nowhere.
+
+**Theorem 5.5.9 The Strong Law of Large Numbers**
+
+Let $X_1, X_2, \dots$ be i.i.d with $EX_i = \mu$ and $\text{Var}(X_i) = \sigma^2 < \infty$. Define $\overline X = 1/n \sum_{i=1}^n X_i$. Then for every $\epsilon > e$,
+
+$$
+P(\lim_{n \to \infty} |\overline X_n - \mu| < \epsilon) = 1
+$$
+I.e. our sample means converge almost surely to $\mu$.
+
+**Definition 5.5.6 Convergence in Distribution**
+
+A sequence of random variables $X_1, X_2, \dots$ convergences in distribution to a random variable $X$ if 
+
+$$
+\lim_{n \to \infty} F_{X_n}(x) = F_X(x)
+$$
+
+at all points $x$ where $F_X(x)$ is continuous.
+
+It's really the cdfs that converge and not the random variables. Convergence in probability implies convergence in distribution.
+
+With the concept of convergence in distribution in hand, the chapter introduces the Central Limit Theorem:
+
+**Theorem 5.5.14 The Central Limit Theorem (Stronger Form)**
+
+Let $X_1,X_2, \dots$ be a sequence of i.i.d random variables with $EX_i = \mu$ and $0 < \text{Var}X_i = \sigma^2 < \infty$.
+Define $\overline X = 1/n \sum_{i=1}^n X_i$. Let G_n(x) denote the cdf of  $\sqrt n (\overline X_n - \mu)/ \sigma$ Then, for any $x$, $-\infty < x < \infty$.
+
+$$
+\lim_{n \to \infty} G_n(x) = \int^x_{-\infty} \frac{1}{\sqrt{2 \pi}} e^{-y^2/2} dy
+$$
+that is, $\frac{\sqrt n (\overline X - \mu)}{\sigma}$ has a limiting standard normal distribution.
+
+What does this mean? The chapter stresses that we have arrived at normality from only very general starting assumptions, pretty impressive!
+
+**Example 5.5.16 Normal Approximation to the Negative Binomial**
+
+Say we have a random sample of size $n$ from a negative binomial$(r,p$ distribution. Recall that
+
+$$
+\begin{aligned}
+EX &= \frac{r(1-p)}{p} \\
+\text{Var}X &= \frac{r(1-p)}{p^2}
+\end{aligned}
+$$
+
+and so by the Central Limit Theorem:
+
+$$
+\frac{\sqrt{n}(\overline{X}-r(1-p) / p)}{\sqrt{r(1-p) / p^{2}}}
+$$
+
+is approximately $\text{Normal}(0,1)$.
 
 
+### Proving Tools {-}
+
+The chapter doesn't call these proving tools, that terminology comes from the [handbook](https://oliverychen.github.io/files/doc/CB.pdf) I'm referring to alongside *Statistical Inference* itself. It uses the term "proving tools" to refer to Slutsky's theorem, the Delta method, and Taylor expansion.
+
+The chapter *does* call Slutsky's Theorem "[a]n approximation tool that can be used in conjunction with the Central Limit Theorem".
+
+**Theorem 5.5.17 Slutsky's Theorem**
+
+If $X_n \to X$ in distribution and $Y_n \to a$, a constant, in probability, then
+
+a. $Y_nX_n \to aX$ in distribution
+b. $X_n + Y_n \to X+a$ in distribution.
 
 
+Revist: Delta Method, Taylor expansion.
 
+### Generating a Random Sample {-}
 
+Starting from generated uniform i.i.d  random variables, we want methods to transform these into random variables from a target distribution.
 
+We saw the inverse CDF method in chapter 2. This is a direct method, in the sense that it gives us a closed-form function for generating our random variable. Unfortunately, sometime closed-form functions for the inverse cdf do not exist and we'd need to solve a (perhaps very complicated) integral to get our random variable. This is the case for generating a $\chi^2_1$ random variable, which would get us a $\text{Normal}(0,1)$ variable. 
+
+What are indirect methods? 
+
+Revisit: page 251 - add accept/ reject algorithm and metropolis algorithm.
 
 
 ## Questions
