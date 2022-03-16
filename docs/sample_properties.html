@@ -24,7 +24,7 @@
 <meta name="author" content="Jake Lawler" />
 
 
-<meta name="date" content="2022-03-10" />
+<meta name="date" content="2022-03-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -207,7 +207,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="data_reduction.html"><a href="data_reduction.html"><i class="fa fa-check"></i><b>6</b> Principles of Data Reduction</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="data_reduction.html"><a href="data_reduction.html#chapter-notes-5"><i class="fa fa-check"></i><b>6.1</b> Chapter Notes</a></li>
+<li class="chapter" data-level="6.1" data-path="data_reduction.html"><a href="data_reduction.html#chapter-notes-5"><i class="fa fa-check"></i><b>6.1</b> Chapter Notes</a>
+<ul>
+<li class="chapter" data-level="" data-path="data_reduction.html"><a href="data_reduction.html#the-sufficiency-principle"><i class="fa fa-check"></i>The Sufficiency Principle</a></li>
+<li class="chapter" data-level="" data-path="data_reduction.html"><a href="data_reduction.html#the-likelihood-principle"><i class="fa fa-check"></i>The Likelihood Principle</a></li>
+<li class="chapter" data-level="" data-path="data_reduction.html"><a href="data_reduction.html#the-equivariance-principle"><i class="fa fa-check"></i>The Equivariance Principle</a></li>
+</ul></li>
 <li class="chapter" data-level="6.2" data-path="data_reduction.html"><a href="data_reduction.html#questions-5"><i class="fa fa-check"></i><b>6.2</b> Questions</a></li>
 <li class="chapter" data-level="" data-path="data_reduction.html"><a href="data_reduction.html#further-reading-5"><i class="fa fa-check"></i>Further Reading</a></li>
 </ul></li>
@@ -341,10 +346,10 @@ or equivalently</p>
 <p><span class="math display">\[
 \lim_{n \to \infty} P(|X_n - X| &lt; \epsilon) = 1
 \]</span></p>
-<p>The <span class="math inline">\(X_i\)</span>s here are typically not i.i.d, the distributions change as the sequence progresses.</p>
+<p>The <span class="math inline">\(X_i\)</span>s here are typically not iid, the distributions change as the sequence progresses.</p>
 <p>The Weak Law of Large Numbers concerns a situation where <span class="math inline">\(X\)</span> is a constant, and the random variables in the sequence are sample means:</p>
 <p><strong>Theorem 5.5.2 The Weak Law of Large Numbers</strong></p>
-<p>Let <span class="math inline">\(X_1, X_2, \dots\)</span> be i.i.d with <span class="math inline">\(EX_i = \mu\)</span> and <span class="math inline">\(\text{Var}(X_i) = \sigma^2 &lt; \infty\)</span>. Define <span class="math inline">\(\overline X = 1/n \sum_{i=1}^n X_i\)</span>. Then for every <span class="math inline">\(\epsilon &gt; e\)</span>,</p>
+<p>Let <span class="math inline">\(X_1, X_2, \dots\)</span> be iid with <span class="math inline">\(EX_i = \mu\)</span> and <span class="math inline">\(\text{Var}(X_i) = \sigma^2 &lt; \infty\)</span>. Define <span class="math inline">\(\overline X = 1/n \sum_{i=1}^n X_i\)</span>. Then for every <span class="math inline">\(\epsilon &gt; e\)</span>,</p>
 <p><span class="math display">\[
 \lim_{n \to \infty} P(|\overline X_n - \mu| &lt; \epsilon) = 1
 \]</span>
@@ -378,7 +383,7 @@ X_6(s) &amp;= s+I_{[\frac{2}{3},1]}(s) \\
 <p>The probability that <span class="math inline">\(|X_n - X| \geq \epsilon\)</span> is the probability of an interval with length going to 0 - so the sequence converges in probability.</p>
 <p>However the sequence does not converge almost surely, and in fact there is no <span class="math inline">\(s\)</span> such that <span class="math inline">\(X_n(s) \to s = X(s)\)</span>. For any <span class="math inline">\(s\)</span> the sequence will alternate between <span class="math inline">\(s\)</span> and <span class="math inline">\(s+1\)</span> infinitely often. Almost sure convergence requires convergence everywhere except perhaps sets with probability 0. The sequence above has convergence nowhere.</p>
 <p><strong>Theorem 5.5.9 The Strong Law of Large Numbers</strong></p>
-<p>Let <span class="math inline">\(X_1, X_2, \dots\)</span> be i.i.d with <span class="math inline">\(EX_i = \mu\)</span> and <span class="math inline">\(\text{Var}(X_i) = \sigma^2 &lt; \infty\)</span>. Define <span class="math inline">\(\overline X = 1/n \sum_{i=1}^n X_i\)</span>. Then for every <span class="math inline">\(\epsilon &gt; e\)</span>,</p>
+<p>Let <span class="math inline">\(X_1, X_2, \dots\)</span> be iid with <span class="math inline">\(EX_i = \mu\)</span> and <span class="math inline">\(\text{Var}(X_i) = \sigma^2 &lt; \infty\)</span>. Define <span class="math inline">\(\overline X = 1/n \sum_{i=1}^n X_i\)</span>. Then for every <span class="math inline">\(\epsilon &gt; e\)</span>,</p>
 <p><span class="math display">\[
 P(\lim_{n \to \infty} |\overline X_n - \mu| &lt; \epsilon) = 1
 \]</span>
@@ -392,7 +397,7 @@ I.e. our sample means converge almost surely to <span class="math inline">\(\mu\
 <p>It’s really the cdfs that converge and not the random variables. Convergence in probability implies convergence in distribution.</p>
 <p>With the concept of convergence in distribution in hand, the chapter introduces the Central Limit Theorem:</p>
 <p><strong>Theorem 5.5.14 The Central Limit Theorem (Stronger Form)</strong></p>
-<p>Let <span class="math inline">\(X_1,X_2, \dots\)</span> be a sequence of i.i.d random variables with <span class="math inline">\(EX_i = \mu\)</span> and <span class="math inline">\(0 &lt; \text{Var}X_i = \sigma^2 &lt; \infty\)</span>.
+<p>Let <span class="math inline">\(X_1,X_2, \dots\)</span> be a sequence of iid random variables with <span class="math inline">\(EX_i = \mu\)</span> and <span class="math inline">\(0 &lt; \text{Var}X_i = \sigma^2 &lt; \infty\)</span>.
 Define <span class="math inline">\(\overline X = 1/n \sum_{i=1}^n X_i\)</span>. Let G_n(x) denote the cdf of <span class="math inline">\(\sqrt n (\overline X_n - \mu)/ \sigma\)</span> Then, for any <span class="math inline">\(x\)</span>, <span class="math inline">\(-\infty &lt; x &lt; \infty\)</span>.</p>
 <p><span class="math display">\[
 \lim_{n \to \infty} G_n(x) = \int^x_{-\infty} \frac{1}{\sqrt{2 \pi}} e^{-y^2/2} dy
@@ -427,7 +432,7 @@ EX &amp;= \frac{r(1-p)}{p} \\
 </div>
 <div id="generating-a-random-sample" class="section level3 unnumbered">
 <h3>Generating a Random Sample</h3>
-<p>Starting from generated uniform i.i.d random variables, we want methods to transform these into random variables from a target distribution.</p>
+<p>Starting from generated uniform iid random variables, we want methods to transform these into random variables from a target distribution.</p>
 <p>We saw the inverse CDF method in chapter 2. This is a direct method, in the sense that it gives us a closed-form function for generating our random variable. Unfortunately, sometime closed-form functions for the inverse cdf do not exist and we’d need to solve a (perhaps very complicated) integral to get our random variable. This is the case for generating a <span class="math inline">\(\chi^2_1\)</span> random variable, which would get us a <span class="math inline">\(\text{Normal}(0,1)\)</span> variable.</p>
 <p>What are indirect methods?</p>
 <p>Revisit: page 251 - add accept/ reject algorithm and metropolis algorithm.</p>

@@ -2,6 +2,187 @@
 
 ## Chapter Notes
 
+This chapter is all about simplifying the process of making inferences from a sample - i.e. restricting the kind of analyses we perform in some principled way. It's really about *norms* of statistical analysis, with these norms justified by deduction from certain plausible-sounding assumptions. 
+
+We'll come across the Sufficiency Principle, the Likelihood Principle, and the Equivariance Principle - all norms that restrict in a useful way the permissible inferences from a sample. All are justified by straightforward-seeming assumptions, but none are universally accepted among statisticians, and many common statistical procedures violate one or more of them.  
+
+The chapter begins by noting that a statistic is a kind of data reduction technique, in the sense that if you base decisions or inferences on the statistic, you will treat two samples equivalently so long as they produce the same value of the statistic. In this way, statistics partition the sample space.
+
+### The Sufficiency Principle {-}
+
+Data reduction of some kind is going to be necessary, but how can we know that by summarising the data we've collected in certain way, we're not throwing away information about the parameter of interest $\theta$? The chapter introduces the concept of a *sufficient statistic*:
+
+**Definition 6.2.1 A Sufficient Statistic**
+
+A statistic $T(\mathbf X)$ is a sufficient statistic for $\theta$ if the conditional distribution of the sample $\mathbf X$ given $T(\mathbf X)$ does not depend on $\theta$.
+
+A sufficient statistic contains all the information about $\theta$ that is present in the sample - once you know the sufficient statistic $T(\mathbf X)$, you don't get any more information about $\theta$ by also knowing the sample. This is the sufficiency principle:
+
+**Sufficiency Principle:** 
+If $T(\mathbf{X})$ is a sufficient statistic for $\theta$, then any inference about $\theta$ should depend on the sample $\mathbf{X}$ only through the value $T(\mathbf{X})$. That is, if $\mathbf{x}$ and $\mathbf{y}$ are two sample points such that $T(\mathbf{x})=T(\mathbf{y})$, then the inference about $\theta$ should be the same whether $\mathbf{X}=\mathbf{x}$ or $\mathbf{X}=\mathbf{y}$ is observed.
+
+For example, say you have iid random variables $X_1, \dots, X_n$ that are each Bernoulli distributed with unknown parameter $\theta$. Then the statistic $T( \mathbf X ) = X_ + \dots + X_n$ (i.e. the sum of all the 1s in the sample) is a sufficient statistic for the parameter $\theta$. Once you know the sum of the random variables, you don't get any more information about $\theta$ by knowing, say, whether $X_3$ is a zero or a one.
+
+Another example is the sample mean for a normal distribution. Say you have random variables $X_1, \dots, X_n$, each iid $\text{Normal}(\mu, \sigma^2)$ variables. Then the sample mean $T(\mathbf X) = \overline {\mathbf X} = (X_1 + \dots + X_n)/n$ is a sufficient statistic for $\mu$. 
+
+These examples are in some sense unusual - the chapter states that sufficient statistics that have a smaller dimension than the size of the sample are not common outside of distributions in the exponential family.
+
+The factorisation theorem is useful for finding sufficient statistics by looking at the sample pdf/pmf:
+
+**Theorem 6.2.6 Factorisation Theorem**
+
+Let $f(\mathbf x|\theta)$ be the joint pdf/pmf of the sample $\mathbf X$. A statistic $T(\mathbf X)$ is a sufficient statistic if and only if there exist functions $g(t | \theta)$ and $h(\mathbf X)$ such that for all sample points $\mathbf x$ and parameter points $\theta$
+
+$$
+f(\mathbf x | \theta) = g( T(\mathbf X)| \theta)h(\mathbf x)
+$$
+
+We factor the pdf/pmf into two parts, only one of which depends on $\theta$. The part that depends on $\theta$ depends on the sample $\text x$ only through function $T(\mathbf X)$ and this function is a sufficient statistic for $\theta$.
+
+Since we're using sufficient statistics for data reduction, we want to know if some sufficient statistics do a better job of reducing the data than others. A *minimal sufficient statistic* is one that reduces the data as much as possible. Sufficient statistics $T(\mathbf X)$ is called a minimal sufficient statistic if, for any other sufficient statistic $T'(\mathbf X)$, $T'(\mathbf x)=T'(\mathbf y) \implies T(\mathbf x) = T(\mathbf y)$. Looking back to the notion of a statistic as partitioning the sample space, we can say that a minimal statistic is the *coarsest possible* partition that retains all information about $\theta$.
+
+The chapter also introduces the concept of an *ancillary statistic*. An ancillary statistic for $\theta$ is one whose distribution does not depend on $\theta$.
+
+For example, if $X_1, \dots, X_n$ are iid uniform variables on the interval $(\theta, \theta + 1), \ -\infty < \theta < \infty$ then the range statistic $R = X_{(n)}-X_{(1)}$ is an ancillary statistic.
+
+Here $X_{(1)}, \dots X_{(n)}$ refer to the *order statistics* (e.g. $X_{(1)} = \min(X_1, \dots, X_n)$ and $X_{(n)} = \max(X_1, \dots, X_n)$).
+
+More generally, if $\theta$ is a a location parameter in any location parameter family distribution, the range statistic is ancillary.
+
+
+It isn't necessarily the case that minimally sufficient statistics for $\theta$ are independent of ancillary statistics for $\theta$. The chaptetr gives this toy example:
+
+**Example 6.2.20 Ancillary Precision**
+
+Let $X_1$ and $X_2$ be iid observations from the discrete distribution that satisfies
+$$
+P_\theta(X=\theta)=P_\theta(X=\theta+1)=P_\theta(X=\theta+2)=\frac{1}{3},
+$$
+where $\theta$, the unknown parameter, is any integer. 
+
+Then $(R, M)$, where $R=X_{(2)}-X_{(1)}$ and $M=\left(X_{(1)}+X_{(2)}\right) / 2$, is a minimal sufficient statistic. Since this is a location parameter family, $R$ is an ancillary statistic.
+
+$R$ is ancillary, but can still give information about $\theta$ if we know a sample point $(r,m)$.
+
+The chapter then introduces *complete statistics*. I had difficulty figuring out what was going on when I first saw the chapter definition (and I'm still not super confident!). Complete statistics are first described as useful for "a description of situations in which [a minimal sufficient statistic is independent of any ancillary statistic]".
+
+Here's the definition:
+
+**Definition 6.2.21 Complete Statistics** 
+
+Let $f(t | \theta)$ be a family of pdfs or pmfs for a statistic $T(\mathbf{X})$. The family of probability distributions is called complete if $E_{\theta} g(T)=0$ for all $\theta$ implies $P_{\theta}(g(T)=0)=1$ for all $\theta$. Equivalently, $T(\mathbf{X})$ is called a complete statistic.
+
+What's going on here? You have some function $g$, of a complete statistic $T(\mathbf{X})$, and you specify that you want $g(T)$ to be an unbiased estimator of 0. Then $g(T)$ must equal 0 with probability 1 for all $\theta$ in your family of distributions. The only unbiased estimator of 0 is the 0 function.
+
+I still don't really understand the motivation for this definition. It ends up being useful (via Basu's theorem) for determining that two statistics are independent without needing to examine their joint distribution. For example you can show that $\overline{X}$ and $S^2$ are independent when sampling from a $\text{Normal}(\mu,\sigma^2)$ population.
+
+Here's Basu's theorem:
+
+**Theorem 6.2.24 Basu's Theorem** 
+
+If $T(\mathbf{X})$ is a complete and minimal sufficient statistic, then $T(\mathbf{X})$ is independent of every ancillary statistic.
+
+Although the chapter later notes that including "minimal" here is slightly redundant, since it can be shown that if a minimal sufficient statistic exists then every complete statistic is also a minimal sufficient statistic.
+
+### The Likelihood Principle {-}
+
+
+**Definition 6.3.1 The Likelihood Function** 
+
+Given a joint pdf/pmf of a sample $f(\mathbf{x} | \theta)$ and an observation $\mathbf{X}=\mathbf{x}$, the function of $\theta$ defined by
+
+$$
+L(\theta \mid \mathbf{x})=f(\mathbf{x} | \theta)
+$$
+is called the likelihood function.
+
+The important difference between a likelihood and a pdf/pmf is that with a likelihood the data is considered fixed, and we vary the parameter $\theta$.
+
+The likelihood principle is a proposal for using the likelihood function to reduce/ summarise data.
+
+**The Likelihood Principle:** 
+If $\mathbf x$ and $\mathbf y$ are two sample points such that $L(\theta | \mathbf x)$ is proportional to $L(\theta | \mathbf y)$, that is, there exists a constant $C(\mathbf x, \mathbf y)$ such that $L(\theta | \mathbf x)=C(\mathbf x, \mathbf y) L(\theta | \mathbf y)$ for all $\theta$, then the conclusions drawn from $\mathbf x$ and $\mathbf y$ should be identical.
+
+Notice that $C(\mathbf x, \mathbf y)$ does not depend on $\theta$, but it can be different for different values of $\mathbf x$ and $\mathbf y$.
+
+The idea here is that the likelihood is going to be used to compare the plausibility of different $\theta$ values, and so if you have two sample points that produce likelihood functions in a fixed ratio with each other for all $\theta$, the relative plausibility of each $\theta$ value should be the same for both. I.e. the same inferences should be drawn about $\theta$, no matter if you observed $\mathbf x$ or $\mathbf y$.
+
+Section 6.3.2 of the chapter derives the likelihood principles from two simpler principles. We start with the concept of an experiment.
+
+The chapter defines an experiment $E$ as a triple $(\mathbf X, \theta, f(\mathbf X, \theta))$. Here, $\mathbf X$ is a random vector with pmf $f(\mathbf X, \theta)$ for some $\theta$ in parameter space $\Theta$. An experimenter will observe some particular sample $\mathbf x$ and draw some conclusion about $\theta$. We denote this conclusion $\text{Ev}(E, \mathbf x)$ - the *evidence about $\theta$ arising from $E$ and $\mathbf x$*.
+
+We now introduce the two principles we'll base the formal likelihood principle on. The first is familiar:
+
+**The Formal Sufficiency Principle:** 
+Consider experiment $E=(\mathbf X, \theta, f(\mathbf X, \theta))$ and sufficient statistic for $\theta$ $T(\mathbf{X})$.If $\mathbf{x}$ and $\mathbf{y}$ are two sample points such that $T(\mathbf{x})=T(\mathbf{y})$, then $\text{Ev}(E, \mathbf x)$ = $\text{Ev}(E, \mathbf y)$.
+
+By accepting the formal sufficiency principle, we are agreeing to equate evidence if the sufficient statistics match.
+
+The other principle is the following:
+
+**Conditionality Principle:** 
+Suppose that $E_1=(\mathbf X_1, \theta, f_1(\mathbf X_1, \theta))$ and $E_1=(\mathbf X_2, \theta, f_2(\mathbf X_2, \theta))$ are two experiments, where only the unknown parameter $\theta$ need be common between the two experiments. 
+Consider the mixed experiment in which the random variable $J$ is observed, where $P(J=1)=P(J=2)=\frac{1}{2}$ (independent of $\theta$, $\mathbf X_1$, or $\mathbf X_2$), and then experiment $E_J$ is performed. 
+Formally, the experiment performed is $E^*=(\mathbf X^*, \theta, f^*(\mathbf X^*, \theta))$, where $\mathbf X^*=(j, \mathbf X_j)$ and $f^*(\mathbf x^* | \theta)=f^*((j, \mathbf x_j) | \theta)=\frac{1}{2} f_j(\mathbf x_j | \theta)$. Then
+$$
+\text{Ev}(E^*,(j, \mathbf x_j))=\text{Ev}(E_j, \mathbf x_j)
+$$
+
+What is this saying? If we flip a coin to decide between two experiments, and so end up performing experiment 1 (say) and observing data $\mathbf x$, the conclusions that we draw about $\theta$ should be the same as if we non-randomly chose to perform experiment 1 (and observed $\mathbf x$) in the first place.
+
+The formal likelihood principle can be derived from these two principles.
+
+**The Formal Likelihood Principle**
+
+Suppose we have experiments $E_1=(\mathbf X_1, \theta, f_1(\mathbf X_1, \theta))$ and $E_1=(\mathbf X_2, \theta, f_2(\mathbf X_2, \theta))$, and sample points $\mathbf x_1^*$ and $\mathbf x_2^*$ from each experiment respectively. If
+
+$$
+L(\theta | x_2^*) = CL(\theta | x_1^*)
+$$
+for all $\theta$ and constant $C(\mathbf x_1^*, \mathbf x_2^*)$, then 
+
+$$
+\text{Ev}(E_1, \mathbf x_1^*) = \text{Ev}(E_2, \mathbf x_2^*)
+$$
+
+The main difference in this statement compared to our first statement of the likelihood principle at the start of the section is that this one concerns two experiments instead of only one.
+
+The corollary is that the evidence should depend on $E$ and $x$ only through the likelihood $L(\theta | \mathbf x)$. If the likelihood is the same (or the ratio of likelihoods is the same), the conclusion is the same, no matter the experiment or the sample.
+
+Birnbaum's Theorem states that the Formal Likelihood Principle follows from the Sufficiency Principle and the Conditionality Principle, and that the converse also holds.
+
+The rest of the section is an interesting discussion about how much trust we should put in to the likelihood principle. Both the sufficiency principle and the conditionality principle seem so straightforward as to be immediately obvious, but the likelihood principle that follows from them is violated in many common statistical procedures. For example, model checking by examining residuals violates the sufficiency principle, because residuals are not a sufficient statistic. Does this mean that residual checking is misguided? Not necessarily, the chapter states that one drawback of the sufficiency principle is that it is very model-dependent - e.g. if you believe in your normally distributed model, then it's true that $\overline X$ and $S^2$ are sufficient statistics. However you may have good reason to hold on to your model a little more tentatively than that.
+
+The discussion is interesting, and has plenty of links to further reading on the topic of these principles and their violation.
+
+### The Equivariance Principle {-}
+
+From the chapter:
+
+> The Equivariance Principle describes a data reduction technique in a slightly different way [to the principles above]. In any application of the Equivariance Principle, a function $T(\mathbf X)$ is specified, but if $T(\mathbf X)=T(\mathbf Y)$, then the Equivariance Principle states that the inference made if $\mathbf x$ is observed should have a *certain relationship* to the inference made if $\mathbf y$ is observed, although the two inferences may not be the same. 
+
+We have two types of equivariance:
+
+* Measurement equivariance - you should draw the same conclusions whether you measure in inches or metres
+* Formal invariance - If two inference problems have the same formal structure in terms of the mathematical model used (the same parameter space $\Theta$, the same set of sample pdfs/pmfs $\{f(\mathbf x | \theta) : \theta \in \Theta\}$, the same allowable inferences and consequences of wrong inferences), then the same inference procedure should be used in both problems.
+
+
+The equivariance principle is then:
+
+**The Equivariance Principle**
+
+If $\mathbf Y = g(\mathbf X)$ is a change of measurement scale such that the model for $\mathbf Y$ has the same formal structure as the model for $\mathbf X$, then an inference procedure should be both measurement equivariant and formally equivariant.
+
+For example, if you're observing a binomial process, whether you're attempting to estimate $p$ or $q=1-p$ your problem has the same formal structure, with just a different measurement scale. If $T(x)$ is an estimate of $p$ using the number of observed successes $x$ and $T^*(y)$ is the estimate of $q$ using the number of observed failures $y = n- x$, the equivariance principle demands that $T(z) = T^*(z)$ for all $z = 0, \dots, n$. So we require
+
+$$
+T(x) = 1- T^*(n - x) = 1 - T(n - x).
+$$
+
+This requirement restricts the space of estimators $T$ that we'll consider using.
+
+The principle of measurement equivariance is fairly uncontroversial, but the requirement of formal invariance means that for any two problems with the same mathematical structure (even if the physical realities are very different) the same inference approach is appropriate. This is a stronger assumption.  
+
 
 ## Questions
 

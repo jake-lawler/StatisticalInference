@@ -133,13 +133,13 @@ $$
 \lim_{n \to \infty} P(|X_n - X| < \epsilon) = 1
 $$
 
-The $X_i$s here are typically not i.i.d, the distributions change as the sequence progresses.
+The $X_i$s here are typically not iid, the distributions change as the sequence progresses.
 
 The Weak Law of Large Numbers concerns a situation where $X$ is a constant, and the random variables in the sequence are sample means:
 
 **Theorem 5.5.2 The Weak Law of Large Numbers**
 
-Let $X_1, X_2, \dots$ be i.i.d with $EX_i = \mu$ and $\text{Var}(X_i) = \sigma^2 < \infty$. Define $\overline X = 1/n \sum_{i=1}^n X_i$. Then for every $\epsilon > e$,
+Let $X_1, X_2, \dots$ be iid with $EX_i = \mu$ and $\text{Var}(X_i) = \sigma^2 < \infty$. Define $\overline X = 1/n \sum_{i=1}^n X_i$. Then for every $\epsilon > e$,
 
 $$
 \lim_{n \to \infty} P(|\overline X_n - \mu| < \epsilon) = 1
@@ -188,7 +188,7 @@ However the sequence does not converge almost surely, and in fact there is no $s
 
 **Theorem 5.5.9 The Strong Law of Large Numbers**
 
-Let $X_1, X_2, \dots$ be i.i.d with $EX_i = \mu$ and $\text{Var}(X_i) = \sigma^2 < \infty$. Define $\overline X = 1/n \sum_{i=1}^n X_i$. Then for every $\epsilon > e$,
+Let $X_1, X_2, \dots$ be iid with $EX_i = \mu$ and $\text{Var}(X_i) = \sigma^2 < \infty$. Define $\overline X = 1/n \sum_{i=1}^n X_i$. Then for every $\epsilon > e$,
 
 $$
 P(\lim_{n \to \infty} |\overline X_n - \mu| < \epsilon) = 1
@@ -211,7 +211,7 @@ With the concept of convergence in distribution in hand, the chapter introduces 
 
 **Theorem 5.5.14 The Central Limit Theorem (Stronger Form)**
 
-Let $X_1,X_2, \dots$ be a sequence of i.i.d random variables with $EX_i = \mu$ and $0 < \text{Var}X_i = \sigma^2 < \infty$.
+Let $X_1,X_2, \dots$ be a sequence of iid random variables with $EX_i = \mu$ and $0 < \text{Var}X_i = \sigma^2 < \infty$.
 Define $\overline X = 1/n \sum_{i=1}^n X_i$. Let G_n(x) denote the cdf of  $\sqrt n (\overline X_n - \mu)/ \sigma$ Then, for any $x$, $-\infty < x < \infty$.
 
 $$
@@ -259,7 +259,7 @@ Revist: Delta Method, Taylor expansion.
 
 ### Generating a Random Sample {-}
 
-Starting from generated uniform i.i.d  random variables, we want methods to transform these into random variables from a target distribution.
+Starting from generated uniform iid  random variables, we want methods to transform these into random variables from a target distribution.
 
 We saw the inverse CDF method in chapter 2. This is a direct method, in the sense that it gives us a closed-form function for generating our random variable. Unfortunately, sometime closed-form functions for the inverse cdf do not exist and we'd need to solve a (perhaps very complicated) integral to get our random variable. This is the case for generating a $\chi^2_1$ random variable, which would get us a $\text{Normal}(0,1)$ variable. 
 
