@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Point Estimation | Notes on ‘Statistical Inference’ by Casella &amp; Berger</title>
   <meta name="description" content="My notes on ‘Statistical Inference’ by George Casella and Roger Berger." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Point Estimation | Notes on ‘Statistical Inference’ by Casella &amp; Berger" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="My notes on ‘Statistical Inference’ by George Casella and Roger Berger." />
   <meta name="github-repo" content="jake-lawler/StatisticalInference" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Jake Lawler" />
 
 
-<meta name="date" content="2022-03-16" />
+<meta name="date" content="2022-03-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,7 @@
   
 <link rel="prev" href="data_reduction.html"/>
 
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -218,7 +217,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7" data-path="point_estimation.html"><a href="point_estimation.html"><i class="fa fa-check"></i><b>7</b> Point Estimation</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="point_estimation.html"><a href="point_estimation.html#chapter-notes-6"><i class="fa fa-check"></i><b>7.1</b> Chapter Notes</a></li>
+<li class="chapter" data-level="7.1" data-path="point_estimation.html"><a href="point_estimation.html#chapter-notes-6"><i class="fa fa-check"></i><b>7.1</b> Chapter Notes</a>
+<ul>
+<li class="chapter" data-level="" data-path="point_estimation.html"><a href="point_estimation.html#method-of-moments"><i class="fa fa-check"></i>Method of Moments</a></li>
+<li class="chapter" data-level="" data-path="point_estimation.html"><a href="point_estimation.html#maximum-likelihood-estimators"><i class="fa fa-check"></i>Maximum Likelihood Estimators</a></li>
+<li class="chapter" data-level="" data-path="point_estimation.html"><a href="point_estimation.html#bayes-estimators"><i class="fa fa-check"></i>Bayes Estimators</a></li>
+<li class="chapter" data-level="" data-path="point_estimation.html"><a href="point_estimation.html#mean-squared-error"><i class="fa fa-check"></i>Mean Squared Error</a></li>
+<li class="chapter" data-level="" data-path="point_estimation.html"><a href="point_estimation.html#best-unbiased-estimators"><i class="fa fa-check"></i>Best Unbiased Estimators</a></li>
+<li class="chapter" data-level="" data-path="point_estimation.html"><a href="point_estimation.html#sufficiency-and-unbiasedness"><i class="fa fa-check"></i>Sufficiency and Unbiasedness</a></li>
+<li class="chapter" data-level="" data-path="point_estimation.html"><a href="point_estimation.html#loss-function-optimality"><i class="fa fa-check"></i>Loss Function Optimality</a></li>
+</ul></li>
 <li class="chapter" data-level="7.2" data-path="point_estimation.html"><a href="point_estimation.html#questions-6"><i class="fa fa-check"></i><b>7.2</b> Questions</a></li>
 <li class="chapter" data-level="" data-path="point_estimation.html"><a href="point_estimation.html#further-reading-6"><i class="fa fa-check"></i>Further Reading</a></li>
 </ul></li>
@@ -246,6 +254,168 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 7</span> Point Estimation</h1>
 <div id="chapter-notes-6" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Chapter Notes</h2>
+<p>This chapter is all about techniques for estimating point values of some parameter <span class="math inline">\(\theta\)</span>. Our estimate is calculated from our sample, but we take <span class="math inline">\(\theta\)</span> to be some property of the larger population that is the object of our inference. The chapter first introduces ways to derive estimators (functions of the sample that produce estimates), and then introduces methods of evaluting these estimators.</p>
+<p>The definition of point estimator in the chapter is very broad - any statistic can be a point estimator, but obviously not all statistics will be reasonable estimators for any particular parameter. How do we find reasonable estimators? I’ll make notes on three of the four methods described in the chapter:</p>
+<ul>
+<li>Method of Moments</li>
+<li>Maximum Likelihoods</li>
+<li>Bayesian Estimators</li>
+</ul>
+<div id="method-of-moments" class="section level3 unnumbered">
+<h3>Method of Moments</h3>
+<p>The idea here is that you draw a sample and then equate the first <span class="math inline">\(k\)</span> sample moments to the first <span class="math inline">\(k\)</span> population moments, and then solve for the paramters of interest. Here are the definition of sample moments <span class="math inline">\(m_i\)</span> and population moments <span class="math inline">\(\mu&#39;_i\)</span> (see chapter 2):</p>
+<p><span class="math display">\[
+\begin{aligned}
+m_1 &amp;= \frac{1}{n} \sum_{i=1}^n X_i, &amp;&amp; \mu&#39;_1 = EX \\
+m_2 &amp;= \frac{1}{n} \sum_{i=1}^n X_i^2, &amp;&amp; \mu&#39;_2 = EX^2 \\
+&amp;\vdots\\
+m_k &amp;= \frac{1}{n} \sum_{i=1}^n X_i^k, &amp;&amp; \mu&#39;_k = EX^k \\
+\end{aligned}
+\]</span></p>
+<p>Equating them gives you a system of simultaneous equations:</p>
+<p><span class="math display">\[
+\begin{aligned}
+m_1 &amp;= \mu&#39;_1(\theta_1, \dots, \theta_k)\\
+m_2 &amp;= \mu&#39;_2(\theta_1, \dots, \theta_k)\\
+&amp;\vdots\\
+m_k &amp;= \mu&#39;_k(\theta_1, \dots, \theta_k)\\
+\end{aligned}
+\]</span></p>
+<p>For example, suppose you have a sample of iid random variables <span class="math inline">\(X_1, \dots, X_n\)</span> that are <span class="math inline">\(\text{Normal}(\mu. \sigma^2)\)</span> distributed. We’re looking to produces estimates for parameters <span class="math inline">\(\theta_1 = \mu\)</span> and <span class="math inline">\(\theta_2 = \sigma^2\)</span>.</p>
+<p>Our sample moments are <span class="math inline">\(m_1 = \overline{X}\)</span> and <span class="math inline">\(m_2 = \frac{1}{n} \sum X_i^2\)</span> and our population moments are <span class="math inline">\(\mu_1&#39; = \mu\)</span> and <span class="math inline">\(\mu_2&#39; =\mu^2 + \sigma^2\)</span>. Equating them gives method of moments estimates:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\tilde\mu &amp;= \overline{X}\\
+\tilde\sigma^2 &amp;= \frac{1}{n} \sum_{i=1}^n X_i^2 - \overline X = \frac{1}{n} \sum_{i=1}^n(X_i - \overline X)^2\\
+\end{aligned}
+\]</span>
+These seem pretty plausible! Although not that our method of moments estimator for the variance is not the unbiased estimator <span class="math inline">\(S^2\)</span>.</p>
+<p>The next example in the chapter concerns a sample <span class="math inline">\(X_1, \dots, X_n\)</span> that is iid <span class="math inline">\(\text{Binomial}(k,p)\)</span>. For the purposes of this example, we want to treat <em>both</em> <span class="math inline">\(p\)</span> and <span class="math inline">\(k\)</span> as unknown. Equating moments gets us to:</p>
+$$
+<span class="math display">\[\begin{aligned}
+\overline X &amp;= kp\\
+\frac{1}{n}\sum X_i^2 &amp;= kp(1-p) + k^2p^2\\
+
+\end{aligned}\]</span>
+<p>$$</p>
+<p>Since for a binomially distributed random variable <span class="math inline">\(X\)</span> we have <span class="math inline">\(E(X) = kp\)</span> and <span class="math inline">\(E(X^2) = \text{Var}(X) + E(X)^2 = kp(1-p) + k^2p^2\)</span>.</p>
+<p>Solving for <span class="math inline">\(p\)</span> and <span class="math inline">\(k\)</span> with a little straightforward algebra gets us to:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\tilde p &amp;= \frac{\overline X}{\tilde k} \\
+\tilde k &amp;=\frac{\overline X^2}{\overline X - \frac{1}{n} \sum (X_{i}-\overline X )^2}
+\end{aligned}
+\]</span></p>
+<p>Looking at the denominator of our estimate of <span class="math inline">\(k\)</span>, you can see that it will become negative if the sample mean is smaller than the sample variance, but we know that <span class="math inline">\(k\)</span> must be positive. Here the range of our method of moments estimate does not coincide with the range of the parameter to be estimated. The chapter does state that these are not the best estimators of the population parameters. But we have gained something - the estimate for <span class="math inline">\(p\)</span> may be intuitively obvious but we probably wouldn’t have been able to come up with that estimate of <span class="math inline">\(k\)</span> without the method of moments.</p>
+</div>
+<div id="maximum-likelihood-estimators" class="section level3 unnumbered">
+<h3>Maximum Likelihood Estimators</h3>
+<p>Our next technique for finding estimators is the method of maximum likelihood. The likelihood function was introduced in the previous chapter. For an iid sample with pdf/pmf <span class="math inline">\(f(x_i | \theta_1 \dots, \theta_k)\)</span> the likelihood function is:</p>
+<p><span class="math display">\[
+L(\mathbf \theta | \mathbf x) = L(\theta_1, \dots, \theta_n | x_1, \dots, x_m) = \prod_{i=1}^n f(x_i | \theta_1, \dots, \theta_k)
+\]</span></p>
+<p>The maximum likelihood parameter value <span class="math inline">\(\hat \theta(\mathbf x)\)</span> is the parameter value for which the likelihood function attains it’s maximum value (considered as a function of <span class="math inline">\(\theta\)</span>) for a given realised sample <span class="math inline">\(\mathbf x\)</span>.</p>
+<p>Here, unlike the method of moments, the range of our parameter estimate will always coincide with the range of the parameter. There are two problems with implementing and understanding the properties of MLEs:</p>
+<ul>
+<li>Finding the global maximum and verifying that it is a maximum - often simple differentiation but other approaches are possible. The chapter includes an example of finding the MLE for the mean of a normal distribution by finding a global upper bound for the likelihood and showing that this bound is only obtained at <span class="math inline">\(\theta = \overline X\)</span>.</li>
+<li>Numerical sensitivity - how sensitive is our MLE to small changes in the sample?</li>
+</ul>
+<p>If we’re going to use differentiation to find an MLE, it’s often easier to work with log likelihoods instead of likelihoods directly. This works out since the log function is strictly increasing and so the extrema coincide. For example, consider the Bernoulli likelihood</p>
+<p><span class="math display">\[
+L(p | \mathbf x) = \prod_{i=1}^n p^{x_i}(1-p)^{1-x_i} = p^y(1-p)^{n-y}
+\]</span></p>
+<p>for <span class="math inline">\(y = \sum x_i\)</span>. This gets easier to differentiate after taking logs:</p>
+<p><span class="math display">\[
+\log L(p | \mathbf x) = y \log p + (n-y) \log (1-p).
+\]</span></p>
+<p>Differentiating and setting to 0 gives:</p>
+<p><span class="math display">\[
+0 = \frac{y}{p} - \frac{n-y}{1-p}
+\]</span></p>
+<p>And some algebra returns the possible solution <span class="math inline">\(p = \frac{y}{n}\)</span>, which can be verified as a maximum.</p>
+<p>The invariance property of MLEs states that if <span class="math inline">\(\hat \theta\)</span> is the MLE for <span class="math inline">\(\theta\)</span>, then <span class="math inline">\(\tau(\hat \theta)\)</span> is the MLE for <span class="math inline">\(\tau( \theta)\)</span> for any function <span class="math inline">\(\tau\)</span>. E.g. if <span class="math inline">\(\theta\)</span> is the mean of a normal distribution then the maximum likelihood estimate of <span class="math inline">\(\sin(\theta)\)</span> is <span class="math inline">\(\sin(\overline X)\)</span>.</p>
+<p>If <span class="math inline">\(\tau\)</span> is one-to-one then it’s easy to see that maximising the likelihood as a function of <span class="math inline">\(\theta\)</span> or maxmimising it as a function of <span class="math inline">\(\tau(\theta)\)</span> makes no difference, but the result holds for any function <span class="math inline">\(\tau(\theta)\)</span>.</p>
+<p>There’s a discussion at the end of the section about numerical instability of MLEs. This occurs when the likelihood function is quite flat near its maximum or there is no finite maximum. For example the MLEs for <span class="math inline">\(k\)</span> and <span class="math inline">\(p\)</span> in binomial sampling can be quite unstable. The chapter says that this is usually not a problem when finding MLEs explicitly but if you’re using a numerical approach it is worth investigating the stability around your estimate.</p>
+</div>
+<div id="bayes-estimators" class="section level3 unnumbered">
+<h3>Bayes Estimators</h3>
+<p>Revisit.</p>
+</div>
+<div id="mean-squared-error" class="section level3 unnumbered">
+<h3>Mean Squared Error</h3>
+<p>The rest of the chapter is concerned with methods of evaluating estimators. The firs method discussed is mean squared error.</p>
+<p><strong>Definition 7.3.1 Mean Squared Error</strong></p>
+<p>The <em>mean squared error (MSE)</em> of an estimator <span class="math inline">\(W\)</span> of a parameter <span class="math inline">\(\theta\)</span> is the function of <span class="math inline">\(\theta\)</span> defined by <span class="math inline">\(E_\theta(W-\theta)^2\)</span>.</p>
+<p>It measures the average squared difference between the estimator <span class="math inline">\(W\)</span> and the parameter <span class="math inline">\(\theta\)</span>. Any increasing function of the absolute difference could be reasonable, but MSE is quite tractable analystically and has the useful interpretation:</p>
+<p><span class="math display">\[
+E_\theta(W-\theta)^2 = \text{Var}_\theta(W) + (E_\theta W - \theta)^2 = \text{Var}_\theta(W)+(\text{Bias}_\theta W)^2
+\]</span></p>
+<p>where <span class="math inline">\(\text{Bias}_\theta W = E_\theta W - \theta\)</span>.</p>
+<p>So a small MSE implies a small combined bias and variance. If an estimator is unbiased, its MSE is equal to its variance. So for example a Normal MSE would have:</p>
+<p><span class="math display">\[
+\begin{aligned}
+E(\overline X - \mu)^2 &amp;= \text{Var}(\overline X) = \frac{\sigma^2}{n} \\
+E(S^2 - \sigma^2)^2 &amp;= \text{Var}(S^2) = \frac{2\sigma^4}{n-1}
+\end{aligned}
+\]</span></p>
+<p>However controlling bias does not guarantee a controlled MSE, and in fact the chapter shows that the biased estimator <span class="math inline">\(\hat\sigma^2\)</span> of <span class="math inline">\(\sigma^2\)</span> has a smaller MSE than <span class="math inline">\(S^2\)</span>. The chapter stresses that this does not mean that <span class="math inline">\(\hat\sigma^2\)</span> should necessarily be preferred as an estimator over <span class="math inline">\(S^2\)</span> - it will, for example, systemically underestimate the variance.</p>
+<p>Sometimes the MSEs of two estimators will cross each other over the parameter range - one will have lower MSE in some portion of the parameter space, and higher MSE in some other portion.</p>
+</div>
+<div id="best-unbiased-estimators" class="section level3 unnumbered">
+<h3>Best Unbiased Estimators</h3>
+<p>The problem of finding a best estimator is difficult in part because of the huge class of candidates. One way of restricting the class of estimators is to consider only the unbiased ones. A best unbiased estimator <span class="math inline">\(W*\)</span> (if it exists) is one with uniformly smallest variance. I.e. the estimator <span class="math inline">\(W*\)</span> is unbiased and for any other unbiased estimator <span class="math inline">\(W\)</span> the variance of <span class="math inline">\(W*\)</span> is less than or equal to the variance of <span class="math inline">\(W\)</span> for all <span class="math inline">\(\theta\)</span>.</p>
+<p>One way of finding a best unbiased estimator is to specify a lower bound <span class="math inline">\(B(\theta)\)</span> on the variance and then show that the estimator attains it. One example of this approach is the Cramér-Rao lower bound.</p>
+<p><strong>Theorem 7.3.8 Cramér-Rao Inequality</strong></p>
+<p>Let <span class="math inline">\(X_1, \dots, X_n\)</span> be a sample with pdf <span class="math inline">\(f(\mathbf x | \theta)\)</span>, and let <span class="math inline">\(W(\mathbf X) = W(X_1, \dots, X_n)\)</span> be any estimator satisfying</p>
+<p><span class="math display">\[
+\frac{d}{d\theta} E_\theta W(\mathbf X) = \int_{\mathcal X} \frac{\partial}{\partial \theta}[W(\mathbf x)f(\mathbf x| \theta)] d\mathbf x
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\text{Var}_\theta W(\mathbf X) &lt; \infty.
+\]</span>
+Then</p>
+<p><span class="math display">\[
+\text{Var}_\theta(W(\mathbf X)) \geq \frac{\left(\frac{d}{d\theta} E_\theta W(\mathbf X)\right)^2}{E_\theta \left( \left(\frac{\partial}{\partial \theta}\log f(\mathbf X | \theta)\right)^2\right)}
+\]</span></p>
+<p>Which gives a lower bound of the variance of an estimator, though there’s no guarantee than any unbiased estimator will attain this lower bound. Here are the conditions for attainment of the Cramér-Rao lower bound.</p>
+<p><strong>Corollary 7.3.15 Attainment</strong>
+Let <span class="math inline">\(X_1, \dots, X_n\)</span> be iid <span class="math inline">\(f(x | \theta)\)</span>, where <span class="math inline">\(f(x | \theta)\)</span> satisfies the conditions of the Cramér-Rao Theorem. Let <span class="math inline">\(L(\theta | \mathbf{x})=\prod_{i=1}^n f\left(x_{i} | \theta\right)\)</span> denote the likelihood function. If <span class="math inline">\(W(\mathbf{X})=W\left(X_{1}, \dots, X_{n}\right)\)</span> is any unbiased estimator of <span class="math inline">\(\tau(\theta)\)</span>, then <span class="math inline">\(W(\mathbf{X})\)</span> attains the Cramér-Rao Lower Bound if and only if
+<span class="math display">\[
+a(\theta)[W(\mathbf{x})-\tau(\theta)]=\frac{\partial}{\partial \theta} \log L(\theta \mid \mathbf{x})
+\]</span>
+for some function <span class="math inline">\(a(\theta)\)</span>.</p>
+</div>
+<div id="sufficiency-and-unbiasedness" class="section level3 unnumbered">
+<h3>Sufficiency and Unbiasedness</h3>
+<p><strong>Theorem 7.3.17 Rao-Blackwell</strong>
+Let <span class="math inline">\(W\)</span> be any unbiased estimator of <span class="math inline">\(\tau(\theta)\)</span>, and let <span class="math inline">\(T\)</span> be a sufficient statistic for <span class="math inline">\(\theta\)</span>. Define <span class="math inline">\(\phi(T)= E(W \mid T)\)</span>. Then <span class="math inline">\(E_{\theta} \phi(T)=\tau(\theta)\)</span> and <span class="math inline">\(\text{Var}_{\theta} \phi(T) \leq \text{Var}_{\theta} W\)</span> for all <span class="math inline">\(\theta\)</span>; that is, <span class="math inline">\(\phi(T)\)</span> is a uniformly better unbiased estimator of <span class="math inline">\(\tau(\theta)\)</span>.</p>
+<p>Conditioning any unbiased estimator on a sufficient statistic will result in a uniform improvement - when we’re looking for best unbiased estimators we only need to consider statistics that are functions of a sufficient statistic.</p>
+<p>Need to revisit this section for the relationship between completeness and best unbiased estimators.</p>
+</div>
+<div id="loss-function-optimality" class="section level3 unnumbered">
+<h3>Loss Function Optimality</h3>
+<p>We can generalise the MSE with the concept of a loss function - any non-negative function that generally increases with the distance between an action/ decision <span class="math inline">\(a\)</span> and parameter. E.g.</p>
+<p>Absolute error loss:</p>
+<p><span class="math display">\[
+L(\theta, a) = |a-\theta|
+\]</span></p>
+<p>Squared error loss:</p>
+<p><span class="math display">\[
+L(\theta, a) = (a-\theta)^2
+\]</span></p>
+<p>If circumstances dictate, we may want to penalise overestimates more than overestimates, which can be done with something like this loss function:</p>
+<p><span class="math display">\[
+L(\theta, a)= \begin{cases}
+(a-\theta)^{2} &amp; \text { if } a&lt;\theta \\
+10(a-\theta)^{2} &amp; \text { if } a \geq \theta\end{cases}
+\]</span></p>
+<p>Evaluating estimators with loss functions is a branch of <em>decision theory</em>. With a decision-theoretic appraoch we’ll evaluate estimators <span class="math inline">\(\delta(\mathbf x)\)</span> of <span class="math inline">\(\theta\)</span> using the risk function:</p>
+<p><span class="math display">\[
+R(\theta, \delta) = E_\theta L(\theta , \delta(\mathbf X))
+\]</span>
+I.e. the average loss that we’ll experience by using the estimator. We’d like the risk function to be small for all possible values of <span class="math inline">\(\theta\)</span>. Like we saw with MSEs above, often risk functions of two candidate estimators will cross in parameter space. In fact the risk function of the squared error loss is the MSE.</p>
+</div>
 </div>
 <div id="questions-6" class="section level2" number="7.2">
 <h2><span class="header-section-number">7.2</span> Questions</h2>
