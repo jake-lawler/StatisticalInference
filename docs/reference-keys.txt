@@ -19,3 +19,6 @@ questions-5
 point_estimation
 chapter-notes-6
 questions-6
+hypothesis_testing
+chapter-notes-7
+questions-7
